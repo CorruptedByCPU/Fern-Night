@@ -1,7 +1,11 @@
 # Fern-Night
-A slightly different approach than Lotus-Effect...
+A slightly different approach than Lotus-Effect and Cyjon...
 
-In this compilation, I'm rewriting daemons as regular programs (ring 3). In addition, all logical processors have been unlocked and are involved in the processing of jobs on the queue.
+In this compilation:
+
+    - daemons run inside the software environment (ring 3),
+    - logical processors have been unlocked,
+    - (in progess) no more static libraries (full support for dynamic linking).
 
 ## Download
 https://blackdev.org/files/fern-night.iso
