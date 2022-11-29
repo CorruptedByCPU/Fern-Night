@@ -1,5 +1,5 @@
 # Fern-Night
-A slightly different approach than Lotus-Effect and Cyjon...
+Synchronizing Cyjon code up to Fern-Night, please be patient.
 
 In this compilation:
 
