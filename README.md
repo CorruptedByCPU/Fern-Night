@@ -1,14 +1,21 @@
-# Fern-Night
-Synchronizing Cyjon code up to Fern-Night, please be patient.
+# Info
 
-In this compilation:
+Fern-Night is now fully compatible with ![Cyjon](https://github.com/CorruptedByCPU/Cyjon/). Any modification to either repository will be reflected in the other.
 
-    - daemons run inside the software environment (ring 3),
-    - logical processors have been unlocked,
-    - (in progess) no more static libraries (full support for dynamic linking).
+# Fern-Night (workname)
+
+A simple, clean, multi-tasking operating system written in C language for 64-bit processors from the AMD64 family.
+
+![Cyjon (current)](https://blackdev.org/shot/os.png)
+
+### Software:
+
+  - Qemu 5.0.0 (or newer)
 
 ## Download
-https://blackdev.org/files/fern-night.iso
+
+   https://blackdev.org/files/fern-night.iso
 
 ### Run
-    qemu-system-x86_64 --enable-kvm -cdrom lotus-effect.iso -m 64 -cpu max -smp 2 -rtc base=localtime
+
+    qemu-system-x86_64 --enable-kvm -cdrom lotus-effect.iso -m 128 -cpu max -smp 2 -rtc base=localtime
