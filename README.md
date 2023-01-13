@@ -6,7 +6,7 @@ Fern-Night is now fully compatible with ![Cyjon](https://github.com/CorruptedByC
 
 A simple, clean, multi-tasking operating system written in C language for 64-bit processors from the AMD64 family.
 
-![Cyjon (current)](https://blackdev.org/shot/os.png)
+![Cyjon (current)](https://blackdev.org/shot/current.png)
 
 ### Software:
 
@@ -18,4 +18,4 @@ A simple, clean, multi-tasking operating system written in C language for 64-bit
 
 ### Run
 
-    qemu-system-x86_64 --enable-kvm -cdrom lotus-effect.iso -m 128 -cpu max -smp 2 -rtc base=localtime
+    qemu-system-x86_64 --enable-kvm -cdrom fern-night.iso -m 128 -cpu max -smp 2 -rtc base=localtime
