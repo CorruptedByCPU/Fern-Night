@@ -6,7 +6,7 @@ Fern-Night is now fully compatible with ![Cyjon](https://github.com/CorruptedByC
 
 A simple, clean, multi-tasking operating system written in C language for 64-bit processors from the AMD64 family.
 
-![Cyjon (current)](https://blackdev.org/shot/current.png?raw=true)
+![Cyjon 0.2099](https://blackdev.org/shot/2099.png?)
 
 ### Software:
 
