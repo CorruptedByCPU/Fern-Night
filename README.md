@@ -1,6 +1,6 @@
 # Info
 
-Fern-Night is now fully compatible with ![Cyjon](https://github.com/CorruptedByCPU/Cyjon/). Any modification to either repository will be reflected in the other.
+Fern-Night is now fully compatible with ![Cyjon](https://github.com/CorruptedByCPU/Cyjon/). Any modification to either repository must be reflected in the other.
 
 # Fern-Night (workname)
 
