@@ -1,0 +1,13 @@
+*.ini
+serial.log
+iso
+system
+build
+deflate
+fpkg
+pkg
+import.sh
+*.o
+vfs
+system.tgx
+*.ogv

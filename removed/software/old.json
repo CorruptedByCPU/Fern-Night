@@ -1,0 +1,16 @@
+{
+	"window": {
+		"width": 322,
+		"height": 203,
+		"value": "2D/3D Engine"
+	},
+	"control": {
+		"id": 1,
+		"x": 300,
+		"type": "close"
+	},
+	"control": {
+		"x": 278,
+		"type": "minimize"
+	}
+}

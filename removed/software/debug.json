@@ -1,0 +1,65 @@
+{
+	"window": {
+		"width": 320,
+		"height": 180,
+		"value": "Debug"
+	},
+	"control": {
+		"id": 1,
+		"x": 298,
+		"type": "close"
+	},
+	"control": {
+		"x": 276,
+		"type": "minimize"
+	},
+	"menu":{
+		"option":{
+			"value":"File",
+			"submenu":{
+				"option":{
+					"id":1,
+					"value":"Exit"
+				}
+			}
+		},
+		"option":{
+			"id":2,
+			"value":"Help"
+		}
+	},
+	"label":{
+		"x": 4,
+		"y": 26,
+		"width": 92,
+		"height": 20,
+		"value": "Lorem ipsum."
+	},
+	"button":{
+		"id": 2,
+		"x": -4,
+		"y": -4,
+		"width": 80,
+		"height": 20,
+		"align": "center",
+		"value": "OK"
+	},
+	"button":{
+		"id": 3,
+		"x": -88,
+		"y": -4,
+		"width": 80,
+		"height": 20,
+		"align": "center",
+		"value": "Cancel"
+	},
+	"button":{
+		"id": 4,
+		"x": -172,
+		"y": -4,
+		"width": 80,
+		"height": 20,
+		"align": "center",
+		"value": "Abort"
+	}
+}

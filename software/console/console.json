@@ -1,0 +1,16 @@
+{
+	"window": {
+		"width": 642,
+		"height": 423,
+		"value": "Console"
+	},
+	"control": {
+		"id": 1,
+		"x": 620,
+		"type": "close"
+	},
+	"control": {
+		"x": 598,
+		"type": "minimize"
+	}
+}

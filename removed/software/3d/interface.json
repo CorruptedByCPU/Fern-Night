@@ -1,0 +1,16 @@
+{
+	"window": {
+		"width": 640,
+		"height": 400,
+		"value": "3D Engine"
+	},
+	"control": {
+		"id": 1,
+		"x": 600,
+		"type": "close"
+	},
+	"control": {
+		"x": 500,
+		"type": "minimize"
+	}
+}

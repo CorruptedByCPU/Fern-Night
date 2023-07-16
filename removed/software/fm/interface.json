@@ -1,0 +1,23 @@
+{
+	"window": {
+		"width": 522,
+		"height": 403,
+		"value": "File Manager"
+	},
+	"control": {
+		"id": 1,
+		"x": 500,
+		"type": "close"
+	},
+	"control": {
+		"x": 478,
+		"type": "minimize"
+	},
+	"list": {
+		"id": 2,
+		"x": 1,
+		"y": 22,
+		"width": 520,
+		"height": 380
+	}
+}
