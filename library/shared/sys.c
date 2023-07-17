@@ -324,7 +324,7 @@ void printf( const char *string, ... ) {
 
 			// prefix before type?
 			uint64_t prefix = lib_string_length_scope_digit( (uint8_t *) &string[ i ] );
-			uint64_t p_value = lib_string_to_integer( (uint8_t *) &string[ i ], STATIC_NUMBER_SYSTEM_decimal );
+			uint64_t p_value = EMPTY; if( prefix ) p_value = lib_string_to_integer( (uint8_t *) &string[ i ], STATIC_NUMBER_SYSTEM_decimal );
 
 			// omit prefix if exist
 			i += prefix;
