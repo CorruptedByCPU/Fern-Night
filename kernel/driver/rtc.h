@@ -41,7 +41,8 @@ Copyright (C) Andrzej Adamczyk (at https://blackdev.org/). All rights reserved.
 	#define	DRIVER_RTC_STATUS_REGISTER_B_periodic_interrupt		0b01000000
 	#define	DRIVER_RTC_STATUS_REGISTER_B_update_in_progress		0b10000000
 
-	void driver_rtc();
-	void driver_rtc_init();
-	uint64_t driver_rtc_time();
+	void driver_rtc( void );
+	void driver_rtc_init( void );
+	uint64_t driver_rtc_time( void );
+	uint8_t driver_rtc_register( uint8_t mode );
 #endif
