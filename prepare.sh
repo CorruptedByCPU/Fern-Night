@@ -5,7 +5,7 @@
 
 clear
 
-git submodule update --recursive
+git submodule update --init
 
 rm -rf build && mkdir -p build
 rm -rf system && mkdir -p system
