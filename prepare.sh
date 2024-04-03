@@ -5,6 +5,8 @@
 
 clear
 
+git submodule update --recursive
+
 rm -rf build && mkdir -p build
 rm -rf system && mkdir -p system
 
@@ -24,8 +26,6 @@ ${ASM} -f elf64 kernel/task.asm -o build/task.o
 ${ASM} -f elf64 kernel/init/idt.asm -o build/idt.o
 ${ASM} -f elf64 kernel/init/gdt.asm -o build/gdt.o
 ${ASM} -f elf64 kernel/driver/ps2.asm -o build/ps2.o
-
-git submodule update --init
 
 ${C} -c kernel/init.c -o build/kernel.o ${CFLAGS} ${KERNEL_MODE} || exit 1;
 ${LD}  build/hpet.o build/service.o build/task.o build/gdt.o build/idt.o build/ps2.o build/kernel.o -o build/kernel -T linker.kernel ${LDFLAGS}
