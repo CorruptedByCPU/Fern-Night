@@ -163,8 +163,8 @@ Copyright (C) Andrzej Adamczyk (at https://blackdev.org/). All rights reserved.
 	void driver_ps2_command( uint8_t command );
 	void driver_ps2_data_write( uint8_t data );
 	uint8_t driver_ps2_data_read();
-	__attribute__(( no_caller_saved_registers )) void driver_ps2_mouse( void );
-	__attribute__(( no_caller_saved_registers )) void driver_ps2_keyboard( void );
+	__attribute__(( preserve_most )) void driver_ps2_mouse( void );
+	__attribute__(( preserve_most )) void driver_ps2_keyboard( void );
 	void driver_ps2_keyboard_key_save( uint16_t key );
 	uint16_t driver_ps2_keyboard_key_read();
 #endif

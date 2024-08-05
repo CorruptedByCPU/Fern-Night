@@ -247,7 +247,7 @@ void driver_ps2_drain() {
 	// there is nothig left, good
 }
 
-__attribute__(( no_caller_saved_registers ))
+__attribute__(( preserve_most ))
 void driver_ps2_mouse( void ) {
 	// data from second controller port?
 	if( driver_port_in_byte( DRIVER_PS2_PORT_COMMAND_OR_STATUS ) & DRIVER_PS2_STATUS_output_second ) {
@@ -341,7 +341,7 @@ uint16_t driver_ps2_keyboard_key_read() {
 	return key;
 }
 
-__attribute__(( no_caller_saved_registers ))
+__attribute__(( preserve_most ))
 void driver_ps2_keyboard( void ) {
 	// get key code
 	uint16_t key = driver_ps2_data_read();

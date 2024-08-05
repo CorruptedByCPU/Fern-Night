@@ -19,8 +19,14 @@ global	driver_ps2_keyboard_entry
 ; align routine to full address
 align	0x08,	db	0x00
 driver_ps2_mouse_entry:
+	; preserve original register
+	push	r11
+
 	; execute driver handler
 	call	driver_ps2_mouse
+
+	; restore original register
+	pop	r11
 
 	; return from the procedure
 	iretq
@@ -28,8 +34,14 @@ driver_ps2_mouse_entry:
 ; align routine to full address
 align	0x08,	db	0x00
 driver_ps2_keyboard_entry:
+	; preserve original register
+	push	r11
+	
 	; execute driver handler
 	call	driver_ps2_keyboard
+
+	; restore original register
+	pop	r11
 
 	; return from the procedure
 	iretq
