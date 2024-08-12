@@ -6,8 +6,8 @@ void kernel_service_driver_mouse( struct LIB_SYS_STRUCTURE_MOUSE *mouse ) {
 	// return information about framebuffer width and height in pixels
 	mouse -> x = kernel -> driver_ps2_mouse_x;
 	mouse -> y = kernel -> driver_ps2_mouse_y;
-	mouse -> x_absolute = kernel -> driver_ps2_mouse_x_absolute;
-	mouse -> y_absolute = kernel -> driver_ps2_mouse_y_absolute;
+	// mouse -> x_absolute = kernel -> driver_ps2_mouse_x_absolute;
+	// mouse -> y_absolute = kernel -> driver_ps2_mouse_y_absolute;
 	mouse -> status = kernel -> driver_ps2_mouse_status;
 }
 

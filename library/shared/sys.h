@@ -100,8 +100,8 @@ Copyright (C) Andrzej Adamczyk (at https://blackdev.org/). All rights reserved.
 	struct	LIB_SYS_STRUCTURE_MOUSE {
 		uint16_t	x;
 		uint16_t	y;
-		int64_t		x_absolute;
-		int64_t		y_absolute;
+		// int64_t		x_absolute;
+		// int64_t		y_absolute;
 		uint8_t		status;
 	} __attribute__( (packed) );
 
