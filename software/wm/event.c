@@ -1,6 +1,6 @@
-/*==============================================================================
-Copyright (C) Andrzej Adamczyk (at https://blackdev.org/). All rights reserved.
-==============================================================================*/
+/*===============================================================================
+ Copyright (C) Andrzej Adamczyk (at https://blackdev.org/). All rights reserved.
+===============================================================================*/
 
 void wm_event() {
 	// there are messages for us?
@@ -197,7 +197,7 @@ void wm_event() {
 
 	//--------------------------------------------------------------------------
 	// left mouse button pressed?
-	if( wm_mouse.status & LIB_SYS_DRIVER_MOUSE_STATUS_left_mouse_button ) {
+	if( wm_mouse.status & LIB_SYS_device_mouse_status_left_mouse_button ) {
 		// left mouse button held down?
 		if( ! wm_mouse_button_left_semaphore ) {	// no
 			// save key state
@@ -230,7 +230,7 @@ void wm_event() {
 				wm_object_selected_semaphore = TRUE;
 
 			// send mouse status to object process
-			wm_ipc_mouse( LIB_SYS_DRIVER_MOUSE_STATUS_left_mouse_button );
+			wm_ipc_mouse( LIB_SYS_device_mouse_status_left_mouse_button );
 
 			// hide all objects with fragile flag
 			if( wm_object_selected != wm_object_taskbar ) wm_object_fragile();

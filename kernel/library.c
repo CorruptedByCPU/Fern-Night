@@ -1,6 +1,6 @@
-/*==============================================================================
-Copyright (C) Andrzej Adamczyk (at https://blackdev.org/). All rights reserved.
-==============================================================================*/
+/*===============================================================================
+ Copyright (C) Andrzej Adamczyk (at https://blackdev.org/). All rights reserved.
+===============================================================================*/
 
 struct KERNEL_LIBRARY_STRUCTURE *kernel_library_add() {
 	// search for empty entry

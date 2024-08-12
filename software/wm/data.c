@@ -1,6 +1,6 @@
-/*==============================================================================
-Copyright (C) Andrzej Adamczyk (at https://blackdev.org/). All rights reserved.
-==============================================================================*/
+/*===============================================================================
+ Copyright (C) Andrzej Adamczyk (at https://blackdev.org/). All rights reserved.
+===============================================================================*/
 
 struct LIB_SYS_STRUCTURE_FRAMEBUFFER wm_framebuffer = { EMPTY };
 struct LIB_SYS_STRUCTURE_MOUSE wm_mouse = { EMPTY };

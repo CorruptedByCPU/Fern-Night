@@ -1,6 +1,6 @@
-/*==============================================================================
-Copyright (C) Andrzej Adamczyk (at https://blackdev.org/). All rights reserved.
-==============================================================================*/
+/*===============================================================================
+ Copyright (C) Andrzej Adamczyk (at https://blackdev.org/). All rights reserved.
+===============================================================================*/
 
 struct KERNEL_STORAGE_STRUCTURE *kernel_storage_register( uint8_t type ) {
 	// block access to binary memory map (only one at a time)

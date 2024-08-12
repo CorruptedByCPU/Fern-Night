@@ -1,6 +1,6 @@
-/*==============================================================================
-Copyright (C) Andrzej Adamczyk (at https://blackdev.org/). All rights reserved.
-==============================================================================*/
+/*===============================================================================
+ Copyright (C) Andrzej Adamczyk (at https://blackdev.org/). All rights reserved.
+===============================================================================*/
 
 // uint8_t menu_json[] = "...";
 MACRO_IMPORT_FILE_AS_STRING( thread_menu_json, "software/wm/menu.json" );
@@ -36,7 +36,7 @@ void wm_thread_menu() {
 			struct LIB_SYS_STRUCTURE_IPC_MOUSE *mouse = (struct LIB_SYS_STRUCTURE_IPC_MOUSE *) &ipc.data;
 
 			// pressed left mouse button?
-			if( mouse -> status & LIB_SYS_DRIVER_MOUSE_STATUS_left_mouse_button ) {
+			if( mouse -> status & LIB_SYS_device_mouse_status_left_mouse_button ) {
 				// check which element is under cursor position
 				uint8_t *element = (uint8_t *) thread_menu_interface.properties; uint64_t e = 0;
 				while( element[ e ] != LIB_INTERFACE_ELEMENT_TYPE_null ) {
@@ -69,7 +69,7 @@ void wm_thread_menu() {
 		lib_interface_hover( (struct LIB_INTERFACE_STRUCTURE *) &thread_menu_interface );
 
 		// // right mouse button pressed?
-		// if( wm_mouse.status & LIB_SYS_DRIVER_MOUSE_STATUS_right_mouse_button ) {
+		// if( wm_mouse.status & LIB_SYS_device_mouse_status_right_mouse_button ) {
 		// 	// right mouse button held down?
 		// 	if( ! wm_mouse_button_right_semaphore ) {	// no
 		// 		// save key state

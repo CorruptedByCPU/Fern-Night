@@ -34,7 +34,8 @@ if [ "${ENV}" = false ]; then echo -e "\n[please install missing software]"; exi
 # optional
 type -a qemu-system-x86_64 &> /dev/null || echo -e "Optional \e[38;5;11mqemu\e[0m not installed. ISO file will be generated regardless of that."
 
-${ASM} -f elf64 kernel/hpet.asm -o build/hpet.o
+# ${ASM} -f elf64 kernel/hpet.asm -o build/hpet.o
+${ASM} -f elf64 kernel/rtc.asm -o build/rtc.o
 ${ASM} -f elf64 kernel/service.asm -o build/service.o
 ${ASM} -f elf64 kernel/task.asm -o build/task.o
 ${ASM} -f elf64 kernel/init/idt.asm -o build/idt.o
@@ -42,7 +43,7 @@ ${ASM} -f elf64 kernel/init/gdt.asm -o build/gdt.o
 ${ASM} -f elf64 kernel/driver/ps2.asm -o build/ps2.o
 
 ${C} -c kernel/init.c -o build/kernel.o ${CFLAGS} ${KERNEL_MODE} || exit 1;
-${LD}  build/hpet.o build/service.o build/task.o build/gdt.o build/idt.o build/ps2.o build/kernel.o -o build/kernel -T linker.kernel ${LDFLAGS}
+${LD}  build/rtc.o build/service.o build/task.o build/gdt.o build/idt.o build/ps2.o build/kernel.o -o build/kernel -T linker.kernel ${LDFLAGS}
 strip -R .comment -s build/kernel
 
 # information

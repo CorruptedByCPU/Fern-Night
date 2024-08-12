@@ -1,10 +1,10 @@
-/*==============================================================================
-Copyright (C) Andrzej Adamczyk (at https://blackdev.org/). All rights reserved.
-==============================================================================*/
+/*===============================================================================
+ Copyright (C) Andrzej Adamczyk (at https://blackdev.org/). All rights reserved.
+===============================================================================*/
 
 #define	KERNEL_name				"Fern-Night"
 #define	KERNEL_version				"0"
-#define	KERNEL_revision				"2166"
+#define	KERNEL_revision				"2167"
 #define	KERNEL_architecture			"x86_64"
 #define	KERNEL_language				"C"
 
@@ -58,27 +58,27 @@ struct	KERNEL_TSS_STRUCTURE_ENTRY {
 	uint32_t	reserved;
 } __attribute__( (packed) );
 
-struct KERNEL_STRUCTURE {
-	// variables of SMP Management functions
-	volatile uint64_t	cpu_count;
+struct KERNEL {
+	// variables of Kernel management functions
+	volatile uint64_t					cpu_count;
 
-	// variables of PS2 controller management functions
-	uint16_t	driver_ps2_mouse_x;
-	uint16_t	driver_ps2_mouse_y;
-	int64_t		driver_ps2_mouse_x_absolute;
-	int64_t		driver_ps2_mouse_y_absolute;
-	uint8_t		driver_ps2_mouse_status;
+	// variables of Input devices
+	uint8_t							device_mouse_status;
+	uint16_t						device_mouse_x;
+	uint16_t						device_mouse_y;
+	uint16_t						device_keyboard[ 8 ];	// cache size of 8 keys
 
-	// variables of video memory
-	uint32_t	*framebuffer_base_address;
-	uint16_t	framebuffer_width_pixel;
-	uint16_t	framebuffer_height_pixel;
-	uint32_t	framebuffer_scanline_byte;
-	uint64_t	framebuffer_manager;
+	// variables of Framebuffer functions
+	uint32_t						*framebuffer_base_address;
+	uint16_t						framebuffer_width_pixel;
+	uint16_t						framebuffer_height_pixel;
+	uint32_t						framebuffer_pitch_byte;
+	int64_t							framebuffer_pid;
 
 	// variables of HPET management functions
-	volatile struct KERNEL_HPET_STRUCTURE_REGISTER	*hpet_base_address;
-	uint64_t	hpet_microtime;
+	// volatile struct KERNEL_STRUCTURE_HPET_REGISTER		*hpet_base_address;
+	// volatile uint64_t					hpet_miliseconds;
+	// uint8_t							hpet_timers;
 
 	// variables of I/O APIC management functions
 	volatile struct KERNEL_IO_APIC_STRUCTURE_REGISTER	*io_apic_base_address;
@@ -131,4 +131,8 @@ struct KERNEL_STRUCTURE {
 	uint64_t	task_id;
 	uint64_t	task_count;
 	uint8_t		task_cpu_semaphore;
+
+	// variables of Time management functions
+	volatile uint64_t					time_rdtsc;
+	volatile uint64_t					time_rtc;
 } __attribute__( (packed) );

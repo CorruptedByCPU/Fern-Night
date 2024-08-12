@@ -1,9 +1,9 @@
-/*==============================================================================
-Copyright (C) Andrzej Adamczyk (at https://blackdev.org/). All rights reserved.
-==============================================================================*/
+/*===============================================================================
+ Copyright (C) Andrzej Adamczyk (at https://blackdev.org/). All rights reserved.
+===============================================================================*/
 
 // kernel environment variables/functions
-struct KERNEL_STRUCTURE *kernel = EMPTY;
+struct KERNEL *kernel = EMPTY;
 
 // variables of GDT management functions
 struct KERNEL_INIT_GDT_STRUCTURE_ENTRY	*kernel_gdt_base_address;

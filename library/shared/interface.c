@@ -1,6 +1,6 @@
-/*==============================================================================
-Copyright (C) Andrzej Adamczyk (at https://blackdev.org/). All rights reserved.
-==============================================================================*/
+/*===============================================================================
+ Copyright (C) Andrzej Adamczyk (at https://blackdev.org/). All rights reserved.
+===============================================================================*/
 
 	//----------------------------------------------------------------------
 	// constants, structures, definitions
@@ -54,7 +54,7 @@ void lib_interface_event( struct LIB_INTERFACE_STRUCTURE *interface ) {
 		struct LIB_SYS_STRUCTURE_IPC_MOUSE *mouse = (struct LIB_SYS_STRUCTURE_IPC_MOUSE *) &ipc.data;
 
 		// pressed left mouse button?
-		if( mouse -> status & LIB_SYS_DRIVER_MOUSE_STATUS_left_mouse_button ) {
+		if( mouse -> status & LIB_SYS_device_mouse_status_left_mouse_button ) {
 			// check which element is under cursor position
 			uint8_t *element = (uint8_t *) interface -> properties; uint64_t e = 0;
 			while( element[ e ] != LIB_INTERFACE_ELEMENT_TYPE_null ) {

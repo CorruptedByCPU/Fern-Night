@@ -1,6 +1,6 @@
-/*==============================================================================
-Copyright (C) Andrzej Adamczyk (at https://blackdev.org/). All rights reserved.
-==============================================================================*/
+/*===============================================================================
+ Copyright (C) Andrzej Adamczyk (at https://blackdev.org/). All rights reserved.
+===============================================================================*/
 
 void kernel_init_page() {
 	// new kernel PML4 array
@@ -50,6 +50,6 @@ void kernel_init_page() {
 	// register I/O APIC controller space
 	kernel_page_map( kernel -> page_base_address, (uintptr_t) kernel -> io_apic_base_address - KERNEL_PAGE_mirror, (uintptr_t) kernel -> io_apic_base_address, STATIC_PAGE_SIZE_page, KERNEL_PAGE_FLAG_present | KERNEL_PAGE_FLAG_write );
 
-	// register HPET controller space
-	kernel_page_map( kernel -> page_base_address, (uintptr_t) kernel -> hpet_base_address - KERNEL_PAGE_mirror, (uintptr_t) kernel -> hpet_base_address, STATIC_PAGE_SIZE_page, KERNEL_PAGE_FLAG_present | KERNEL_PAGE_FLAG_write );
+	// // register HPET controller space
+	// kernel_page_map( kernel -> page_base_address, (uintptr_t) kernel -> hpet_base_address - KERNEL_PAGE_mirror, (uintptr_t) kernel -> hpet_base_address, STATIC_PAGE_SIZE_page, KERNEL_PAGE_FLAG_present | KERNEL_PAGE_FLAG_write );
 }

@@ -1,6 +1,6 @@
-/*==============================================================================
-Copyright (C) Andrzej Adamczyk (at https://blackdev.org/). All rights reserved.
-==============================================================================*/
+/*===============================================================================
+ Copyright (C) Andrzej Adamczyk (at https://blackdev.org/). All rights reserved.
+===============================================================================*/
 
 void lib_sys_framebuffer( struct LIB_SYS_STRUCTURE_FRAMEBUFFER *framebuffer ) {
 	__asm__ volatile( "" :: "a" (LIB_SYS_REQUEST_FRAMEBUFFER), "D" (framebuffer) );

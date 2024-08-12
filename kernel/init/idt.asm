@@ -1,6 +1,6 @@
-;===============================================================================
-;Copyright (C) Andrzej Adamczyk (at https://blackdev.org/). All rights reserved.
-;===============================================================================
+;=================================================================================
+; Copyright (C) Andrzej Adamczyk (at https://blackdev.org/). All rights reserved.
+;=================================================================================
 
 ; get pointer from processor exception handling function
 extern	kernel_idt_exception

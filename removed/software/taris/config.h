@@ -1,6 +1,6 @@
-/*==============================================================================
-Copyright (C) Andrzej Adamczyk (at https://blackdev.org/). All rights reserved.
-==============================================================================*/
+/*===============================================================================
+ Copyright (C) Andrzej Adamczyk (at https://blackdev.org/). All rights reserved.
+===============================================================================*/
 
 	#define	TARIS_MENU_HEIGHT_pixel		(LIB_FONT_HEIGHT_pixel << STATIC_MULTIPLE_BY_2_shift) + 4
 

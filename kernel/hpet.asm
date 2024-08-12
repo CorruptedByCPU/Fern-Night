@@ -1,6 +1,6 @@
-;===============================================================================
-;Copyright (C) Andrzej Adamczyk (at https://blackdev.org/). All rights reserved.
-;===============================================================================
+;=================================================================================
+; Copyright (C) Andrzej Adamczyk (at https://blackdev.org/). All rights reserved.
+;=================================================================================
 
 ; get pointer from HPET handling function
 extern	kernel_hpet_uptime

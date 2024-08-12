@@ -1,9 +1,11 @@
-/*==============================================================================
-Copyright (C) Andrzej Adamczyk (at https://blackdev.org/). All rights reserved.
-==============================================================================*/
+/*===============================================================================
+ Copyright (C) Andrzej Adamczyk (at https://blackdev.org/). All rights reserved.
+===============================================================================*/
 
 #ifndef	LIB_SYS
 	#define	LIB_SYS
+
+	#define	STD_SHIFT_256					8
 
 	#define	LIB_SYS_REQUEST_EXIT				0x00
 	#define	LIB_SYS_REQUEST_FRAMEBUFFER			0x01
@@ -136,8 +138,8 @@ Copyright (C) Andrzej Adamczyk (at https://blackdev.org/). All rights reserved.
 		uint8_t		data[ LIB_SYS_IPC_DATA_size_byte ];
 	} __attribute__( (packed) );
 
-	#define	LIB_SYS_DRIVER_MOUSE_STATUS_left_mouse_button	0b00000001
-	#define	LIB_SYS_DRIVER_MOUSE_STATUS_right_mouse_button	0b00000010
+	#define	LIB_SYS_device_mouse_status_left_mouse_button	0b00000001
+	#define	LIB_SYS_device_mouse_status_right_mouse_button	0b00000010
 
 	struct	LIB_SYS_STRUCTURE_IPC_DEFAULT {
 		uint8_t		type;

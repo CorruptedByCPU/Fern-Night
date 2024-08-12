@@ -1,6 +1,6 @@
-/*==============================================================================
-Copyright (C) Andrzej Adamczyk (at https://blackdev.org/). All rights reserved.
-==============================================================================*/
+/*===============================================================================
+ Copyright (C) Andrzej Adamczyk (at https://blackdev.org/). All rights reserved.
+===============================================================================*/
 
 #define	DAEMON
 
@@ -17,7 +17,7 @@ Copyright (C) Andrzej Adamczyk (at https://blackdev.org/). All rights reserved.
 	// kernel --------------------------------------------------------------
 	#include	"config.h"
 	#include	"exec.h"
-	#include	"hpet.h"
+	// #include	"hpet.h"
 	#include	"idt.h"
 	#include	"io_apic.h"
 	#include	"ipc.h"
@@ -66,7 +66,7 @@ Copyright (C) Andrzej Adamczyk (at https://blackdev.org/). All rights reserved.
 	// kernel --------------------------------------------------------------
 	#include	"data.c"
 	#include	"exec.c"
-	#include	"hpet.c"
+	// #include	"hpet.c"
 	#include	"idt.c"
 	#include	"io_apic.c"
 	#include	"lapic.c"
@@ -74,6 +74,7 @@ Copyright (C) Andrzej Adamczyk (at https://blackdev.org/). All rights reserved.
 	#include	"log.c"
 	#include	"memory.c"
 	#include	"page.c"
+	#include	"rtc.c"
 	#include	"service.c"
 	#include	"storage.c"
 	#include	"stream.c"
@@ -93,12 +94,13 @@ Copyright (C) Andrzej Adamczyk (at https://blackdev.org/). All rights reserved.
 	#include	"init/exec.c"
 	#include	"init/free.c"
 	#include	"init/gdt.c"
-	#include	"init/hpet.c"
+	// #include	"init/hpet.c"
 	#include	"init/idt.c"
 	#include	"init/ipc.c"
 	#include	"init/library.c"
 	#include	"init/memory.c"
 	#include	"init/page.c"
+	#include	"init/rtc.c"
 	#include	"init/smp.c"
 	#include	"init/storage.c"
 	#include	"init/stream.c"
@@ -151,11 +153,11 @@ void kernel_init( void ) {
 	// share environment variables/functions
 	kernel_init_env();
 
-	// configure Real Time Clock
-	driver_rtc_init();
+	// configure RTC
+	kernel_init_rtc();
 
 	// configure HPET
-	kernel_init_hpet();
+	// kernel_init_hpet();
 
 	// configure PS2 controller
 	driver_ps2_init();

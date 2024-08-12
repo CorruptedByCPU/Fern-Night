@@ -1,6 +1,6 @@
-/*==============================================================================
-Copyright (C) Andrzej Adamczyk (at https://blackdev.org/). All rights reserved.
-==============================================================================*/
+/*===============================================================================
+ Copyright (C) Andrzej Adamczyk (at https://blackdev.org/). All rights reserved.
+===============================================================================*/
 
 #define	DAEMON
 
@@ -17,7 +17,7 @@ Copyright (C) Andrzej Adamczyk (at https://blackdev.org/). All rights reserved.
 	#include	"../kernel/task.h"
 	//======================================================================
 
-void child( struct KERNEL_STRUCTURE *kernel, uint64_t pid ) {
+void child( struct KERNEL *kernel, uint64_t pid ) {
 	// find all childs of parent
 	for( uint64_t i = 0; i < KERNEL_TASK_limit; i++ ) {
 		// this task belongs to parent?
@@ -37,7 +37,7 @@ void child( struct KERNEL_STRUCTURE *kernel, uint64_t pid ) {
 	}
 }
 
-void entry( struct KERNEL_STRUCTURE *kernel ) {
+void entry( struct KERNEL *kernel ) {
 	// infinite loop :)
 	while( TRUE ) {
 		// search in task queue for closed tasks

@@ -1,6 +1,6 @@
-/*==============================================================================
-Copyright (C) Andrzej Adamczyk (at https://blackdev.org/). All rights reserved.
-==============================================================================*/
+/*===============================================================================
+ Copyright (C) Andrzej Adamczyk (at https://blackdev.org/). All rights reserved.
+===============================================================================*/
 
 void kernel_init_acpi() {
 	// RSDP pointer available?
@@ -101,15 +101,15 @@ void kernel_init_acpi() {
 			}
 		}
 
-		// if entry contains an HPET signature (High-Precision Event Timer)
-		struct KERNEL_INIT_ACPI_STRUCTURE_HPET *hpet = (struct KERNEL_INIT_ACPI_STRUCTURE_HPET *) entry;
-		if( hpet -> signature == KERNEL_INIT_ACPI_HPET_signature ) {
-			// store base address of I/O APIC
-			kernel -> hpet_base_address = (struct KERNEL_HPET_STRUCTURE_REGISTER *) (hpet -> base_address | KERNEL_PAGE_mirror);
+		// // if entry contains an HPET signature (High-Precision Event Timer)
+		// struct KERNEL_INIT_ACPI_STRUCTURE_HPET *hpet = (struct KERNEL_INIT_ACPI_STRUCTURE_HPET *) entry;
+		// if( hpet -> signature == KERNEL_INIT_ACPI_HPET_signature ) {
+		// 	// store base address of I/O APIC
+		// 	kernel -> hpet_base_address = (struct KERNEL_HPET_STRUCTURE_REGISTER *) (hpet -> base_address | KERNEL_PAGE_mirror);
 
-			// show message regarding I/O APIC
-			kernel_log( " HPET base address 0x%x\n", (uint64_t) kernel -> hpet_base_address );
-		}
+		// 	// show message regarding I/O APIC
+		// 	kernel_log( " HPET base address 0x%x\n", (uint64_t) kernel -> hpet_base_address );
+		// }
 
 	}
 }

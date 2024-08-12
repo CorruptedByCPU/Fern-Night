@@ -1,14 +1,14 @@
-/*==============================================================================
-Copyright (C) Andrzej Adamczyk (at https://blackdev.org/). All rights reserved.
-==============================================================================*/
+/*===============================================================================
+ Copyright (C) Andrzej Adamczyk (at https://blackdev.org/). All rights reserved.
+===============================================================================*/
 
 void kernel_service_driver_mouse( struct LIB_SYS_STRUCTURE_MOUSE *mouse ) {
 	// return information about framebuffer width and height in pixels
-	mouse -> x = kernel -> driver_ps2_mouse_x;
-	mouse -> y = kernel -> driver_ps2_mouse_y;
-	// mouse -> x_absolute = kernel -> driver_ps2_mouse_x_absolute;
-	// mouse -> y_absolute = kernel -> driver_ps2_mouse_y_absolute;
-	mouse -> status = kernel -> driver_ps2_mouse_status;
+	mouse -> x = kernel -> device_mouse_x;
+	mouse -> y = kernel -> device_mouse_y;
+	// mouse -> x_absolute = kernel -> device_mouse_x_absolute;
+	// mouse -> y_absolute = kernel -> device_mouse_y_absolute;
+	mouse -> status = kernel -> device_mouse_status;
 }
 
 void kernel_service_exit( void ) {
@@ -40,17 +40,17 @@ void kernel_service_framebuffer( struct LIB_SYS_STRUCTURE_FRAMEBUFFER *framebuff
 	// return information about framebuffer width and height in pixels
 	framebuffer -> width_pixel = kernel -> framebuffer_width_pixel;
 	framebuffer -> height_pixel = kernel -> framebuffer_height_pixel;
-	framebuffer -> scanline_byte = kernel -> framebuffer_scanline_byte;
+	framebuffer -> scanline_byte = kernel -> framebuffer_pitch_byte;
 
 	// if there is no "manager" of framebuffer, yet
-	if( ! kernel -> framebuffer_manager )
+	if( ! kernel -> framebuffer_pid )
 		// and framebuffer space was successfully shared with process
-		if( (framebuffer -> base_address = (uint32_t *) kernel_memory_share( (uintptr_t) kernel -> framebuffer_base_address - KERNEL_PAGE_mirror, kernel -> framebuffer_scanline_byte * kernel -> framebuffer_height_pixel )) )
+		if( (framebuffer -> base_address = (uint32_t *) kernel_memory_share( (uintptr_t) kernel -> framebuffer_base_address - KERNEL_PAGE_mirror, kernel -> framebuffer_pitch_byte * kernel -> framebuffer_height_pixel )) )
 			// assign process as manager of framebuffer
-			kernel -> framebuffer_manager = task -> pid;
+			kernel -> framebuffer_pid = task -> pid;
 
 	// inform about framebuffer manager
-	framebuffer -> pid = kernel -> framebuffer_manager;
+	framebuffer -> pid = kernel -> framebuffer_pid;
 }
 
 void kernel_service_ipc_send( uint64_t pid, uint8_t *data ) {
@@ -61,9 +61,9 @@ void kernel_service_ipc_send( uint64_t pid, uint8_t *data ) {
 	uint64_t i = EMPTY;
 	while( TRUE ) {
 		// free entry?
-		if( kernel -> ipc_base_address[ i ].ttl < kernel -> hpet_microtime ) {
+		if( kernel -> ipc_base_address[ i ].ttl < kernel -> time_rtc ) {
 			// set the message aging time
-			kernel -> ipc_base_address[ i ].ttl = kernel -> hpet_microtime + KERNEL_IPC_timeout;
+			kernel -> ipc_base_address[ i ].ttl = kernel -> time_rtc + KERNEL_IPC_timeout;
 
 			// set the PID of the process sending the message
 			kernel -> ipc_base_address[ i ].source = kernel_task_pid();
@@ -100,7 +100,7 @@ uint8_t kernel_service_ipc_receive( struct LIB_SYS_STRUCTURE_IPC *message, uint8
 	// find message for us
 	for( uint64_t i = 0; i < KERNEL_IPC_limit; i++ ) {
 		// message available?
-		if( kernel -> ipc_base_address[ i ].ttl > kernel -> hpet_microtime ) {
+		if( kernel -> ipc_base_address[ i ].ttl > kernel -> time_rtc ) {
 			// message properties
 			struct LIB_SYS_STRUCTURE_IPC_DEFAULT *current = (struct LIB_SYS_STRUCTURE_IPC_DEFAULT *) kernel -> ipc_base_address[ i ].data;
 
@@ -211,7 +211,7 @@ void kernel_service_sleep( uint64_t ms ) {
 	struct KERNEL_TASK_STRUCTURE *task = (struct KERNEL_TASK_STRUCTURE *) kernel_task_active();
 
 	// go to sleep for N ms
-	task -> sleep = kernel -> hpet_microtime + 1;
+	task -> sleep = kernel -> time_rtc + 1;
 
 	// release the remaining CPU time
 	__asm__ volatile( "int $0x20" );
@@ -247,7 +247,7 @@ uint16_t kernel_service_task_status( uint64_t pid ) {
 
 uint64_t kernel_service_uptime() {
 	// return ticks passed from kernel environment setup
-	return kernel -> hpet_microtime;
+	return kernel -> time_rtc;
 }
 
 uintptr_t kernel_service_task() {

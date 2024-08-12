@@ -2,8 +2,8 @@
 ; Copyright (C) Andrzej Adamczyk (at https://blackdev.org/). All rights reserved.
 ;=================================================================================
 
-; get pointer from APIC exception handling function
-extern	kernel_task
+; get pointer from driver handling function
+extern	kernel_rtc
 
 ; 64 bit procedure code
 [BITS 64]
@@ -12,18 +12,15 @@ extern	kernel_task
 section	.text
 
 ; share routine
-global	kernel_task_entry
+global	driver_rtc_entry
 
 ; align routine to full address
 align	0x08,	db	0x00
-kernel_task_entry:
-	; turn off Interrupts Flag
-	cli
-
+driver_rtc_entry:
 	; turn off Direction Flag
 	cld
 
-	; keep original registers
+	; preserve original registers
 	push	rax
 	push	rbx
 	push	rcx
@@ -40,16 +37,16 @@ kernel_task_entry:
 	push	r14
 	push	r15
 
-	; keep "floating point" registers
-	mov	rbp,	0xFFFFFF8000000000 - 0x1000
-	FXSAVE64	[rbp]
+	; ; preserve "floating point" registers
+	; mov	rax,	-0x1000
+	; FXSAVE64	[rax]
 
-	; execute exception handler
-	call	kernel_task
+	; execute driver handler
+	call	kernel_rtc
 
-	; restore "floating point" registers
-	mov	rbp,	0xFFFFFF8000000000 - 0x1000
-	FXRSTOR64	[rbp]
+	; ; restore "floating point" registers
+	; mov	rax,	-0x1000
+	; FXRSTOR64	[rax]
 
 	; restore ogirinal registers
 	pop	r15
@@ -68,5 +65,5 @@ kernel_task_entry:
 	pop	rbx
 	pop	rax
 
-	; return from the procedure
+	; return from routine
 	iretq

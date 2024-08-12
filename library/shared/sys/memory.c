@@ -1,6 +1,6 @@
-/*==============================================================================
-Copyright (C) Andrzej Adamczyk (at https://blackdev.org/). All rights reserved.
-==============================================================================*/
+/*===============================================================================
+ Copyright (C) Andrzej Adamczyk (at https://blackdev.org/). All rights reserved.
+===============================================================================*/
 
 void lib_sys_memory( struct LIB_SYS_STRUCTURE_MEMORY *memory ) {
 	__asm__ volatile( "" :: "a" (LIB_SYS_REQUEST_MEMORY), "D" (memory) );

@@ -1,6 +1,6 @@
-/*==============================================================================
-Copyright (C) Andrzej Adamczyk (at https://blackdev.org/). All rights reserved.
-==============================================================================*/
+/*===============================================================================
+ Copyright (C) Andrzej Adamczyk (at https://blackdev.org/). All rights reserved.
+===============================================================================*/
 
 void lib_sys_mouse( uintptr_t mouse ) {
 	__asm__ volatile( "" :: "a" (LIB_SYS_REQUEST_MOUSE), "D" (mouse) );

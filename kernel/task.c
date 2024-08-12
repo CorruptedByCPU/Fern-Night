@@ -1,6 +1,6 @@
-/*==============================================================================
-Copyright (C) Andrzej Adamczyk (at https://blackdev.org/). All rights reserved.
-==============================================================================*/
+/*===============================================================================
+ Copyright (C) Andrzej Adamczyk (at https://blackdev.org/). All rights reserved.
+===============================================================================*/
 
 void kernel_task( void ) {
 	// from list of active tasks on individual logical processors
@@ -142,7 +142,7 @@ struct KERNEL_TASK_STRUCTURE *kernel_task_select( uint64_t entry ) {
 			// task available for processing?
 			if( kernel -> task_queue_address[ entry ].flags & KERNEL_TASK_FLAG_active && ! (kernel -> task_queue_address[ entry ].flags & KERNEL_TASK_FLAG_exec) ) {	// yes
 				// a dormant task?
-				if( kernel -> task_queue_address[ entry ].sleep > kernel -> hpet_microtime ) continue;
+				if( kernel -> task_queue_address[ entry ].sleep > kernel -> time_rtc ) continue;
 
 				// mark the task as performed by current logical processor
 				kernel -> task_queue_address[ entry ].flags |= KERNEL_TASK_FLAG_exec;

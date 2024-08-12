@@ -1,6 +1,6 @@
-/*==============================================================================
-Copyright (C) Andrzej Adamczyk (at https://blackdev.org/). All rights reserved.
-==============================================================================*/
+/*===============================================================================
+ Copyright (C) Andrzej Adamczyk (at https://blackdev.org/). All rights reserved.
+===============================================================================*/
 
 uint8_t		driver_ps2_mouse_semaphore		= FALSE;
 uint8_t		driver_ps2_mouse_type			= EMPTY;
@@ -267,29 +267,29 @@ void driver_ps2_mouse( void ) {
 				if( packet & DRIVER_PS2_DEVICE_MOUSE_PACKET_OVERFLOW_y ) break;	// yes
 
 				// save device status: mouse
-				kernel -> driver_ps2_mouse_status = packet;
+				kernel -> device_mouse_status = packet;
 
 				// package handled from given interrupt
 				driver_ps2_mouse_packet++;
 				break;
 			case 1:
 				// value on X axis negative?
-				if( kernel -> driver_ps2_mouse_status & DRIVER_PS2_DEVICE_MOUSE_PACKET_X_SIGNED ) {
+				if( kernel -> device_mouse_status & DRIVER_PS2_DEVICE_MOUSE_PACKET_X_SIGNED ) {
 					packet = ~packet + 1;
 
 					// keep offset
-					if( kernel -> driver_ps2_mouse_x - packet < 0 ) kernel -> driver_ps2_mouse_x = EMPTY;
-					else kernel -> driver_ps2_mouse_x -= packet;
+					if( kernel -> device_mouse_x - packet < 0 ) kernel -> device_mouse_x = EMPTY;
+					else kernel -> device_mouse_x -= packet;
 
 					// calculate relative position
-					kernel -> driver_ps2_mouse_x_absolute -= packet;
+					// kernel -> device_mouse_x_absolute -= packet;
 				} else {
 					// keep offset
-					if( kernel -> driver_ps2_mouse_x + packet < kernel -> framebuffer_width_pixel ) kernel -> driver_ps2_mouse_x += packet;
-					else kernel -> driver_ps2_mouse_x = kernel -> framebuffer_width_pixel - 1;
+					if( kernel -> device_mouse_x + packet < kernel -> framebuffer_width_pixel ) kernel -> device_mouse_x += packet;
+					else kernel -> device_mouse_x = kernel -> framebuffer_width_pixel - 1;
 
 					// calculate relative position
-					kernel -> driver_ps2_mouse_x_absolute += packet;
+					// kernel -> device_mouse_x_absolute += packet;
 				}
 
 				// package handled from given interrupt
@@ -297,22 +297,22 @@ void driver_ps2_mouse( void ) {
 				break;
 			case 2:
 				// value on Y axis negative?
-				if( kernel -> driver_ps2_mouse_status & DRIVER_PS2_DEVICE_MOUSE_PACKET_Y_SIGNED ) {
+				if( kernel -> device_mouse_status & DRIVER_PS2_DEVICE_MOUSE_PACKET_Y_SIGNED ) {
 					packet = ~packet + 1;
 
 					// keep offset
-					if( kernel -> driver_ps2_mouse_y + packet < kernel -> framebuffer_height_pixel ) kernel -> driver_ps2_mouse_y += packet;
-					else kernel -> driver_ps2_mouse_y = kernel -> framebuffer_height_pixel - 1;
+					if( kernel -> device_mouse_y + packet < kernel -> framebuffer_height_pixel ) kernel -> device_mouse_y += packet;
+					else kernel -> device_mouse_y = kernel -> framebuffer_height_pixel - 1;
 
 					// calculate relative position
-					kernel -> driver_ps2_mouse_y_absolute += packet;
+					// kernel -> device_mouse_y_absolute += packet;
 				} else {
 					// keep offset
-					if( kernel -> driver_ps2_mouse_y - packet < 0 ) kernel -> driver_ps2_mouse_y = EMPTY;
-					else kernel -> driver_ps2_mouse_y -= packet;
+					if( kernel -> device_mouse_y - packet < 0 ) kernel -> device_mouse_y = EMPTY;
+					else kernel -> device_mouse_y -= packet;
 
 					// calculate relative position
-					kernel -> driver_ps2_mouse_y_absolute -= packet;
+					// kernel -> device_mouse_y_absolute -= packet;
 				}
 
 				// package handled from given interrupt
@@ -328,7 +328,7 @@ void driver_ps2_mouse( void ) {
 uint16_t driver_ps2_keyboard_key_read() {
 	// Am I framebuffer manager?
 	struct KERNEL_TASK_STRUCTURE *task = kernel_task_active();
-	if( task -> pid != kernel -> framebuffer_manager ) return EMPTY;	// no
+	if( task -> pid != kernel -> framebuffer_pid ) return EMPTY;	// no
 
 	// get first key code in buffer
 	uint16_t key = driver_ps2_keyboard_storage[ 0 ];
@@ -455,6 +455,6 @@ void driver_ps2_init() {
 	kernel_io_apic_connect( KERNEL_IDT_IRQ_offset + DRIVER_PS2_KEYBOARD_IRQ_number, DRIVER_PS2_KEYBOARD_IO_APIC_register );
 
 	// set initial position of the cursor pointer
-	kernel -> driver_ps2_mouse_x = kernel -> framebuffer_width_pixel >> STATIC_DIVIDE_BY_2_shift;
-	kernel -> driver_ps2_mouse_y = kernel -> framebuffer_height_pixel >> STATIC_DIVIDE_BY_2_shift;
+	kernel -> device_mouse_x = kernel -> framebuffer_width_pixel >> STATIC_DIVIDE_BY_2_shift;
+	kernel -> device_mouse_y = kernel -> framebuffer_height_pixel >> STATIC_DIVIDE_BY_2_shift;
 }

@@ -1,6 +1,6 @@
-/*==============================================================================
-Copyright (C) Andrzej Adamczyk (at https://blackdev.org/). All rights reserved.
-==============================================================================*/
+/*===============================================================================
+ Copyright (C) Andrzej Adamczyk (at https://blackdev.org/). All rights reserved.
+===============================================================================*/
 
 void lib_sys_ipc_send( uint64_t pid, uint8_t *data ) {
 	__asm__ volatile( "" :: "a" (LIB_SYS_REQUEST_IPC_SEND), "D" (pid), "S" (data) );

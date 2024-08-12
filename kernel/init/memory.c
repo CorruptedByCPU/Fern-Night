@@ -1,6 +1,6 @@
-/*==============================================================================
-Copyright (C) Andrzej Adamczyk (at https://blackdev.org/). All rights reserved.
-==============================================================================*/
+/*===============================================================================
+ Copyright (C) Andrzej Adamczyk (at https://blackdev.org/). All rights reserved.
+===============================================================================*/
 
 void kernel_init_memory() {
 	// limine shared with us a memory map?
@@ -25,7 +25,7 @@ void kernel_init_memory() {
 			// this space is larger than previous one?
 			if( largest_continous_space_in_bytes < limine_memmap_request.response -> entries[ i ] -> length ) {
 				// keep logical address of largest continous memory space (reflection in Higher Half)
-				kernel = (struct KERNEL_STRUCTURE *) (limine_memmap_request.response -> entries[ i ] -> base | KERNEL_PAGE_mirror);
+				kernel = (struct KERNEL *) (limine_memmap_request.response -> entries[ i ] -> base | KERNEL_PAGE_mirror);
 
 				// keep size information
 				largest_continous_space_in_bytes = limine_memmap_request.response -> entries[ i ] -> length;
@@ -34,7 +34,7 @@ void kernel_init_memory() {
 	}
 
 	// binary memory map base address after kernel environment variables/functions/rountines
-	kernel -> memory_base_address = (uint32_t *) (MACRO_PAGE_ALIGN_UP( (uintptr_t) kernel + sizeof( struct KERNEL_STRUCTURE ) ));
+	kernel -> memory_base_address = (uint32_t *) (MACRO_PAGE_ALIGN_UP( (uintptr_t) kernel + sizeof( struct KERNEL ) ));
 
 	// describe all spaces marked as USBALE in binary memory map
 	uintptr_t binary_memory_map_limit = EMPTY;
@@ -66,7 +66,7 @@ void kernel_init_memory() {
 	// calculate size of binary memory map in pages based on farthest end of memory map entry
 	uint64_t initial_structure_length = MACRO_PAGE_ALIGN_UP( (binary_memory_map_limit >> STATIC_PAGE_SIZE_shift) >> STATIC_DIVIDE_BY_8_shift ) >> STATIC_PAGE_SIZE_shift;
 	// add size of kernel environment space in pages
-	initial_structure_length += MACRO_PAGE_ALIGN_UP( sizeof( struct KERNEL_STRUCTURE ) ) >> STATIC_PAGE_SIZE_shift;
+	initial_structure_length += MACRO_PAGE_ALIGN_UP( sizeof( struct KERNEL ) ) >> STATIC_PAGE_SIZE_shift;
 
 	// first N pages of binary memory map used by kernel environment variables/functions and binary memory map itself, mark as unavailable (used)
 	for( uint64_t p = ((uintptr_t) kernel & ~KERNEL_PAGE_mirror) >> STATIC_PAGE_SIZE_shift; p < (((uintptr_t) kernel & ~KERNEL_PAGE_mirror) >> STATIC_PAGE_SIZE_shift) + initial_structure_length; p++ )

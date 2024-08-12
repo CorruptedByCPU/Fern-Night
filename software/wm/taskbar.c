@@ -1,6 +1,6 @@
-/*==============================================================================
-Copyright (C) Andrzej Adamczyk (at https://blackdev.org/). All rights reserved.
-==============================================================================*/
+/*===============================================================================
+ Copyright (C) Andrzej Adamczyk (at https://blackdev.org/). All rights reserved.
+===============================================================================*/
 
 // uint8_t menu_json[] = "...";
 MACRO_IMPORT_FILE_AS_STRING( thread_taskbar_json, "software/wm/taskbar.json" );
@@ -180,7 +180,7 @@ void wm_thread_taskbar() {
 		// receive pending messages
 		if( lib_sys_ipc_receive( (struct LIB_SYS_STRUCTURE_IPC *) &ipc, LIB_SYS_IPC_TYPE_MOUSE ) ) {
 			// pressed left mouse button?
-			if( mouse -> status & LIB_SYS_DRIVER_MOUSE_STATUS_left_mouse_button ) {
+			if( mouse -> status & LIB_SYS_device_mouse_status_left_mouse_button ) {
 				// cursor over taskbar menu button?
 				if( wm_mouse.x < WM_OBJECT_TASKBAR_HEIGHT_pixel ) {
 					// menu window invisible?
