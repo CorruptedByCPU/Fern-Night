@@ -14,6 +14,10 @@
 #define	KERNEL_CONTEXT_STACK_address		(0xFFFFFF8000000000 - KERNEL_CONTEXT_STACK_byte)
 #define	KERNEL_CONTEXT_STACK_pointer		(0xFFFFFF8000000000 - STATIC_PAGE_SIZE_byte)
 
+#ifndef	KERNEL_GDT
+	#include		"./gdt.h"
+#endif
+
 #define	KERNEL_STORAGE_limit			1
 
 #define	KERNEL_STORAGE_TYPE_memory		0b00000001
@@ -75,10 +79,19 @@ struct KERNEL {
 	uint32_t						framebuffer_pitch_byte;
 	int64_t							framebuffer_pid;
 
+	// variables of GDT management functions
+	struct KERNEL_STRUCTURE_GDT_HEADER			gdt_header;
+
 	// variables of HPET management functions
 	// volatile struct KERNEL_STRUCTURE_HPET_REGISTER		*hpet_base_address;
 	// volatile uint64_t					hpet_miliseconds;
 	// uint8_t							hpet_timers;
+
+
+
+
+
+
 
 	// variables of I/O APIC management functions
 	volatile struct KERNEL_IO_APIC_STRUCTURE_REGISTER	*io_apic_base_address;

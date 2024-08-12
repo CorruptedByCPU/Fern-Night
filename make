@@ -16,7 +16,7 @@ if [ -z "${OPT}" ]; then OPT="fast"; fi
 
 C="clang"
 LD="ld"
-ASM="nasm"
+AA="nasm"
 ISO="xorriso"
 CFLAGS="${CFLAGS} -std=c18 -O${OPT} -march=x86-64 -nostdlib -fomit-frame-pointer -fno-builtin -fno-stack-protector -m64 -mno-red-zone -fno-asynchronous-unwind-tables"
 KERNEL_MODE="-mno-mmx -mno-sse -mno-sse2 -mno-3dnow"
@@ -27,20 +27,20 @@ ENV=true
 echo -n "Fern-Night environment: "
 	type -a ${C} &> /dev/null || (echo -en "\e[38;5;196m${C}\e[0m" && ENV=false)
 	type -a ${LD} &> /dev/null || (echo -en "\e[38;5;196m${LD}\e[0m" && ENV=false)
-	type -a ${ASM} &> /dev/null || (echo -en "\e[38;5;196m${ASM}\e[0m" && ENV=false)
+	type -a ${AA} &> /dev/null || (echo -en "\e[38;5;196m${AA}\e[0m" && ENV=false)
 	type -a ${ISO} &> /dev/null || (echo -en "\e[38;5;196m${ISO}\e[0m" && ENV=false)
 if [ "${ENV}" = false ]; then echo -e "\n[please install missing software]"; exit 1; else echo -e "\e[38;5;2m\xE2\x9C\x94\e[0m"; fi
 
 # optional
 type -a qemu-system-x86_64 &> /dev/null || echo -e "Optional \e[38;5;11mqemu\e[0m not installed. ISO file will be generated regardless of that."
 
-# ${ASM} -f elf64 kernel/hpet.asm -o build/hpet.o
-${ASM} -f elf64 kernel/rtc.asm -o build/rtc.o
-${ASM} -f elf64 kernel/service.asm -o build/service.o
-${ASM} -f elf64 kernel/task.asm -o build/task.o
-${ASM} -f elf64 kernel/init/idt.asm -o build/idt.o
-${ASM} -f elf64 kernel/init/gdt.asm -o build/gdt.o
-${ASM} -f elf64 kernel/driver/ps2.asm -o build/ps2.o
+# ${AA} -f elf64 kernel/hpet.asm -o build/hpet.o
+${AA} -f elf64 kernel/rtc.asm -o build/rtc.o
+${AA} -f elf64 kernel/service.asm -o build/service.o
+${AA} -f elf64 kernel/task.asm -o build/task.o
+${AA} -f elf64 kernel/init/idt.asm -o build/idt.o
+${AA} -f elf64 kernel/init/gdt.asm -o build/gdt.o
+${AA} -f elf64 kernel/driver/ps2.asm -o build/ps2.o
 
 ${C} -c kernel/init.c -o build/kernel.o ${CFLAGS} ${KERNEL_MODE} || exit 1;
 ${LD}  build/rtc.o build/service.o build/task.o build/gdt.o build/idt.o build/ps2.o build/kernel.o -o build/kernel -T linker.kernel ${LDFLAGS}
