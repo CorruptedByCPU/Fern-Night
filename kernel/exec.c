@@ -22,7 +22,7 @@ uint64_t kernel_exec( uint8_t *path, uint8_t length, uint8_t stream ) {
 	// check if file contains proper ELF64 header
 
 	// file have a proper ELF64 header?
-	if( ! lib_elf_check( kernel_exec_file_work_space ) ) return EMPTY;
+	if( ! lib_elf_identify( kernel_exec_file_work_space ) ) return EMPTY;
 
 	// file's ELF structure properties
 	struct LIB_ELF_STRUCTURE *elf = (struct LIB_ELF_STRUCTURE *) kernel_exec_file_work_space;

@@ -86,16 +86,18 @@ struct KERNEL {
 	// variables of GDT management functions
 	struct KERNEL_STRUCTURE_GDT_HEADER			gdt_header;
 
-// variables of I/O APIC management functions
-volatile struct KERNEL_IO_APIC_STRUCTURE_REGISTER	*io_apic_base_address;
+	// variables of I/O APIC management functions
+	volatile struct KERNEL_STRUCTURE_IO_APIC_REGISTER	*io_apic_base_address;
+	uint32_t						io_apic_irq_lines;
+	uint8_t							io_apic_semaphore;
 
 // variables of IPC management functions
 struct LIB_SYS_STRUCTURE_IPC	*ipc_base_address;
 uint8_t		ipc_semaphore;
 
-// variables of APIC management functions
-struct KERNEL_LAPIC_STRUCTURE	*lapic_base_address;
-uint32_t		lapic_last_id;
+	// variables of APIC management functions
+	struct KERNEL_LAPIC_STRUCTURE				*lapic_base_address;
+	uint32_t						lapic_last_id;
 
 // variables of Library management functions
 struct KERNEL_LIBRARY_STRUCTURE	*library_base_address;

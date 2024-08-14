@@ -54,7 +54,7 @@ void kernel_library_import( struct LIB_ELF_STRUCTURE *elf ) {
 
 	// by default we don't need any external libraries
 	uint8_t *strtab = EMPTY;
-	struct LIB_ELF_STRUCTURE_SECTION_DYNAMIC *dynamic = EMPTY;
+	struct LIB_ELF_STRUCTURE_DYNAMIC_ENTRY *dynamic = EMPTY;
 
 	// retrieve information about dynamic and string table
 	for( uint16_t e = 0; e < elf -> section_entry_count; e++ ) {
@@ -62,7 +62,7 @@ void kernel_library_import( struct LIB_ELF_STRUCTURE *elf ) {
 		if( ! strtab ) if( elf_section[ e ].type == LIB_ELF_SECTION_TYPE_strtab ) strtab = (uint8_t *) ((uint64_t) elf + elf_section[ e ].file_offset);
 
 		// dynamic section
-		if( elf_section[ e ].type == LIB_ELF_SECTION_TYPE_dynamic ) dynamic = (struct LIB_ELF_STRUCTURE_SECTION_DYNAMIC *) ((uintptr_t) elf + elf_section[ e ].file_offset);
+		if( elf_section[ e ].type == LIB_ELF_SECTION_TYPE_dynamic ) dynamic = (struct LIB_ELF_STRUCTURE_DYNAMIC_ENTRY *) ((uintptr_t) elf + elf_section[ e ].file_offset);
 	}
 
 	// if dynamic section doesn't exist

@@ -21,7 +21,7 @@ void kernel_init_daemon() {
 	// check if file contains proper ELF64 header
 
 	// file have a proper ELF64 header?
-	if( ! lib_elf_check( kernel_daemon_file_work_space ) ) return;
+	if( ! lib_elf_identify( kernel_daemon_file_work_space ) ) return;
 
 	// file's ELF structure properties
 	struct LIB_ELF_STRUCTURE *elf = (struct LIB_ELF_STRUCTURE *) kernel_daemon_file_work_space;

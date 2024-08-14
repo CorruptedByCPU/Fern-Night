@@ -72,7 +72,7 @@
 		uint64_t	entry_count;
 	} __attribute__( (packed) );
 
-	struct	LIB_ELF_STRUCTURE_SECTION_DYNAMIC {
+	struct	LIB_ELF_STRUCTURE_DYNAMIC_ENTRY {
 		uint64_t	type;
 		uint64_t	offset;
 	} __attribute__( (packed) );
@@ -91,5 +91,5 @@
 		uint64_t	symbol_value;
 	} __attribute__( (packed) );
 
-	uint8_t lib_elf_check( uintptr_t address );
+	uint8_t lib_elf_identify( uintptr_t address );
 #endif
