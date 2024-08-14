@@ -22,6 +22,10 @@
 	#include		"./tss.h"
 #endif
 
+#ifndef	KERNEL_IDT
+	#include		"./idt.h"
+#endif
+
 #define	KERNEL_STORAGE_limit			1
 
 #define	KERNEL_STORAGE_TYPE_memory		0b00000001
@@ -85,6 +89,9 @@ struct KERNEL {
 
 	// variables of GDT management functions
 	struct KERNEL_STRUCTURE_GDT_HEADER			gdt_header;
+
+	// variables of IDT management functions
+	struct KERNEL_IDT_STRUCTURE_HEADER			idt_header;
 
 	// variables of I/O APIC management functions
 	volatile struct KERNEL_STRUCTURE_IO_APIC_REGISTER	*io_apic_base_address;
