@@ -18,6 +18,14 @@
 	#include		"./gdt.h"
 #endif
 
+#ifndef	KERNEL_TSS
+	#include		"./tss.h"
+#endif
+
+#ifndef	KERNEL_IDT
+	#include		"./idt.h"
+#endif
+
 #define	KERNEL_STORAGE_limit			1
 
 #define	KERNEL_STORAGE_TYPE_memory		0b00000001
@@ -82,70 +90,69 @@ struct KERNEL {
 	// variables of GDT management functions
 	struct KERNEL_STRUCTURE_GDT_HEADER			gdt_header;
 
-	// variables of HPET management functions
-	// volatile struct KERNEL_STRUCTURE_HPET_REGISTER		*hpet_base_address;
-	// volatile uint64_t					hpet_miliseconds;
-	// uint8_t							hpet_timers;
-
-
-
-
-
-
+	// variables of IDT management functions
+	struct KERNEL_IDT_STRUCTURE_HEADER			idt_header;
+	// functions of IDT management
+	void							(*idt_mount)( uint8_t id, uint16_t type, uintptr_t address );
 
 	// variables of I/O APIC management functions
-	volatile struct KERNEL_IO_APIC_STRUCTURE_REGISTER	*io_apic_base_address;
+	volatile struct KERNEL_STRUCTURE_IO_APIC_REGISTER	*io_apic_base_address;
+	uint32_t						io_apic_irq_lines;
+	uint8_t							io_apic_semaphore;
 
-	// variables of IPC management functions
-	struct LIB_SYS_STRUCTURE_IPC	*ipc_base_address;
-	uint8_t		ipc_semaphore;
+// variables of IPC management functions
+struct LIB_SYS_STRUCTURE_IPC	*ipc_base_address;
+uint8_t		ipc_semaphore;
 
 	// variables of APIC management functions
-	struct KERNEL_LAPIC_STRUCTURE	*lapic_base_address;
-	uint32_t		lapic_last_id;
+	struct KERNEL_LAPIC_STRUCTURE				*lapic_base_address;
+	uint32_t						lapic_last_id;
 
-	// variables of Library management functions
-	struct KERNEL_LIBRARY_STRUCTURE	*library_base_address;
-	uint32_t	*library_memory_map_address;
+// variables of Library management functions
+struct KERNEL_LIBRARY_STRUCTURE	*library_base_address;
+uint32_t	*library_memory_map_address;
 
-	// Log management function
-	void		(*log)( const char *string, ... );
+// Log management function
+void		(*log)( const char *string, ... );
 
-	// variables of Memory management functions
-	uint32_t	*memory_base_address;
-	uint8_t		memory_page_semaphore;
-	// pointers of Memory management functions
-	void		(*memory_release)( uintptr_t address, uint64_t pages );
+// variables of Memory management functions
+uint32_t	*memory_base_address;
+uint8_t		memory_page_semaphore;
+// pointers of Memory management functions
+void		(*memory_release)( uintptr_t address, uint64_t pages );
 
-	// variables of page management functions
-	uint64_t	*page_base_address;
-	uint64_t	page_total;
-	uint64_t	page_available;
-	uint64_t	page_limit;
-	uint64_t	page_array;
-	// pointers of Page management
-	void		(*page_deconstruction)( uintptr_t *pml4 );
+// variables of page management functions
+uint64_t	*page_base_address;
+uint64_t	page_total;
+uint64_t	page_available;
+uint64_t	page_limit;
+uint64_t	page_array;
+// pointers of Page management
+void		(*page_deconstruction)( uintptr_t *pml4 );
 
-	// variables of Storage management functions
-	struct KERNEL_STORAGE_STRUCTURE	*storage_base_address;
-	uint8_t		storage_root_id;
-	uint8_t		storage_semaphore;
+// variables of Storage management functions
+struct KERNEL_STORAGE_STRUCTURE	*storage_base_address;
+uint8_t		storage_root_id;
+uint8_t		storage_semaphore;
 
-	// variable of Stream management functions
-	struct KERNEL_STREAM_STRUCTURE	*stream_base_address;
-	uint8_t		stream_semaphore;
-	// pointers of Stream management functions
-	void		(*stream_release)( struct KERNEL_STREAM_STRUCTURE *stream );
+// variable of Stream management functions
+struct KERNEL_STREAM_STRUCTURE	*stream_base_address;
+uint8_t		stream_semaphore;
+// pointers of Stream management functions
+void		(*stream_release)( struct KERNEL_STREAM_STRUCTURE *stream );
 
-	// variables of Task management functions
-	struct KERNEL_TASK_STRUCTURE	*task_queue_address;
-	uintptr_t	*task_ap_address;
-	uint8_t		task_queue_semaphore;
-	uint64_t	task_id;
-	uint64_t	task_count;
-	uint8_t		task_cpu_semaphore;
+// variables of Task management functions
+struct KERNEL_TASK_STRUCTURE	*task_queue_address;
+uintptr_t	*task_ap_address;
+uint8_t		task_queue_semaphore;
+uint64_t	task_id;
+uint64_t	task_count;
+uint8_t		task_cpu_semaphore;
 
-	// variables of Time management functions
-	volatile uint64_t					time_rdtsc;
-	volatile uint64_t					time_rtc;
+// variables of Time management functions
+volatile uint64_t					time_rdtsc;
+volatile uint64_t					time_rtc;
+
+	// variables of TSS management functions
+	struct KERNEL_STRUCTURE_TSS	tss_table;
 } __attribute__( (packed) );

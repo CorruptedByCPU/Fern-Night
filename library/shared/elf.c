@@ -11,7 +11,7 @@
 	#include	"elf.h"
 	//======================================================================
 
-uint8_t lib_elf_check( uintptr_t address ) {
+uint8_t lib_elf_identify( uintptr_t address ) {
 	// properties of file
 	struct LIB_ELF_STRUCTURE *header = (struct LIB_ELF_STRUCTURE *) address;
 
