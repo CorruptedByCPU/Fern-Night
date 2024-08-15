@@ -4,7 +4,7 @@
 
 uintptr_t kernel_memory_share( uintptr_t physical_address, uint64_t size_byte ) {
 	// find free space in process memory for framebuffer
-	struct KERNEL_TASK_STRUCTURE *task = (struct KERNEL_TASK_STRUCTURE *) kernel_task_active();
+	struct KERNEL_STRUCTURE_TASK *task = (struct KERNEL_STRUCTURE_TASK *) kernel_task_active();
 
 	// convert size of framebuffer into pages
 	uint64_t pages = MACRO_PAGE_ALIGN_UP( size_byte ) >> STATIC_PAGE_SIZE_shift;

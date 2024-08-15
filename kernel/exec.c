@@ -37,7 +37,7 @@ uint64_t kernel_exec( uint8_t *path, uint8_t length, uint8_t stream ) {
 	kernel_library_import( elf );
 
 	// create a new job in the queue
-	struct KERNEL_TASK_STRUCTURE *child;
+	struct KERNEL_STRUCTURE_TASK *child;
 	if( ! (child = kernel_task_add( path, exec_length )) ) return EMPTY;	// failed
 
 	// make space for the process paging table
@@ -142,7 +142,7 @@ uint64_t kernel_exec( uint8_t *path, uint8_t length, uint8_t stream ) {
 	child -> stream_in = kernel_stream();
 
 	// set default output stream based on flag
-	struct KERNEL_TASK_STRUCTURE *parent = (struct KERNEL_TASK_STRUCTURE *) kernel_task_active();
+	struct KERNEL_STRUCTURE_TASK *parent = (struct KERNEL_STRUCTURE_TASK *) kernel_task_active();
 	switch( stream ) {
 		case LIB_SYS_STREAM_FLOW_out_to_parent_in: {
 			// the child's output to the parent's input

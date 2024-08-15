@@ -40,7 +40,7 @@ void kernel_init_storage() {
 			kernel -> storage_root_id = i;
 
 			// update kernel task with
-			struct KERNEL_TASK_STRUCTURE *task = kernel_task_active();
+			struct KERNEL_STRUCTURE_TASK *task = kernel_task_active();
 
 			// main storage device
 			task -> storage = i;

@@ -49,7 +49,7 @@ void kernel_stream_release( struct KERNEL_STRUCTURE_STREAM *stream ) {
 
 void kernel_stream_out( uint8_t *string, uint64_t length ) {
 	// get the process output stream id
-	struct KERNEL_TASK_STRUCTURE *task = (struct KERNEL_TASK_STRUCTURE *) kernel_task_active();
+	struct KERNEL_STRUCTURE_TASK *task = (struct KERNEL_STRUCTURE_TASK *) kernel_task_active();
 
 	// data volume supported?
 	if( length > LIB_SYS_STREAM_SIZE_byte ) return;	// no
@@ -132,7 +132,7 @@ void kernel_stream_out_value( uint64_t value, uint8_t base, uint8_t prefix, uint
 
 uint64_t kernel_stream_in( uint8_t *cache ) {
 	// get the process output stream id
-	struct KERNEL_TASK_STRUCTURE *task = (struct KERNEL_TASK_STRUCTURE *) kernel_task_active();
+	struct KERNEL_STRUCTURE_TASK *task = (struct KERNEL_STRUCTURE_TASK *) kernel_task_active();
 
 	// stream closed or empty?
 	if( task -> stream_in -> flags & LIB_SYS_STREAM_FLAG_closed || task -> stream_in -> free == LIB_SYS_STREAM_SIZE_byte ) return EMPTY;	// tak
@@ -168,7 +168,7 @@ uint64_t kernel_stream_in( uint8_t *cache ) {
 
 uint8_t kernel_stream_get( uint8_t *meta, uint8_t direction ) {
 	// task properties
-	struct KERNEL_TASK_STRUCTURE *task = (struct KERNEL_TASK_STRUCTURE *) kernel_task_active();
+	struct KERNEL_STRUCTURE_TASK *task = (struct KERNEL_STRUCTURE_TASK *) kernel_task_active();
 
 	// stream properties
 	struct KERNEL_STRUCTURE_STREAM *stream;
@@ -193,7 +193,7 @@ uint8_t kernel_stream_get( uint8_t *meta, uint8_t direction ) {
 
 void kernel_stream_set( uint8_t direction, uint8_t *meta ) {
 	// task properties
-	struct KERNEL_TASK_STRUCTURE *task = (struct KERNEL_TASK_STRUCTURE *) kernel_task_active();
+	struct KERNEL_STRUCTURE_TASK *task = (struct KERNEL_STRUCTURE_TASK *) kernel_task_active();
 
 	// stream properties
 	struct KERNEL_STRUCTURE_STREAM *stream;

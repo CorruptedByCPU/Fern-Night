@@ -141,13 +141,14 @@ uint8_t		stream_semaphore;
 // pointers of Stream management functions
 void		(*stream_release)( struct KERNEL_STRUCTURE_STREAM *stream );
 
-// variables of Task management functions
-struct KERNEL_TASK_STRUCTURE	*task_queue_address;
-uintptr_t	*task_ap_address;
-uint8_t		task_queue_semaphore;
-uint64_t	task_id;
-uint64_t	task_count;
-uint8_t		task_cpu_semaphore;
+	// variables of Task management functions
+	struct KERNEL_STRUCTURE_TASK			*task_base_address;
+	uintptr_t					*task_cpu_address;
+	uint8_t						task_cpu_semaphore;
+	uint8_t						task_semaphore;
+	uint64_t					task_limit;
+	uint64_t					task_count;
+	int64_t						task_id;
 
 // variables of Time management functions
 volatile uint64_t					time_rdtsc;
