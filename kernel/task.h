@@ -31,8 +31,8 @@
 		uint64_t			sleep;
 		uint32_t			*memory_map;
 		uint64_t			page;
-		struct KERNEL_STREAM_STRUCTURE	*stream_in;
-		struct KERNEL_STREAM_STRUCTURE	*stream_out;
+		struct KERNEL_STRUCTURE_STREAM	*stream_in;
+		struct KERNEL_STRUCTURE_STREAM	*stream_out;
 		uint64_t			directory;
 		volatile uint16_t		flags;
 		uint8_t				storage;

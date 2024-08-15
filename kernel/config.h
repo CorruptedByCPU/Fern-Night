@@ -136,10 +136,10 @@ uint8_t		storage_root_id;
 uint8_t		storage_semaphore;
 
 // variable of Stream management functions
-struct KERNEL_STREAM_STRUCTURE	*stream_base_address;
+struct KERNEL_STRUCTURE_STREAM	*stream_base_address;
 uint8_t		stream_semaphore;
 // pointers of Stream management functions
-void		(*stream_release)( struct KERNEL_STREAM_STRUCTURE *stream );
+void		(*stream_release)( struct KERNEL_STRUCTURE_STREAM *stream );
 
 // variables of Task management functions
 struct KERNEL_TASK_STRUCTURE	*task_queue_address;
