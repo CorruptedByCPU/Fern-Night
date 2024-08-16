@@ -13,10 +13,10 @@ void kernel_service_driver_mouse( struct LIB_SYS_STRUCTURE_MOUSE *mouse ) {
 
 void kernel_service_exit( void ) {
 	// properties of current task
-	struct KERNEL_TASK_STRUCTURE *task = kernel_task_active();
+	struct KERNEL_STRUCTURE_TASK *task = kernel_task_active();
 
 	// mark task as closed and not active
-	task -> flags |= KERNEL_TASK_FLAG_closed;
+	task -> flags |= KERNEL_TASK_FLAG_close;
 	task -> flags &= ~KERNEL_TASK_FLAG_active;
 
 	// release rest AP time
@@ -35,7 +35,7 @@ void kernel_service_memory( struct LIB_SYS_STRUCTURE_MEMORY *memory ) {
 
 void kernel_service_framebuffer( struct LIB_SYS_STRUCTURE_FRAMEBUFFER *framebuffer ) {
 	// find free space in process memory for framebuffer
-	struct KERNEL_TASK_STRUCTURE *task = (struct KERNEL_TASK_STRUCTURE *) kernel_task_active();
+	struct KERNEL_STRUCTURE_TASK *task = (struct KERNEL_STRUCTURE_TASK *) kernel_task_active();
 
 	// return information about framebuffer width and height in pixels
 	framebuffer -> width_pixel = kernel -> framebuffer_width_pixel;
@@ -63,7 +63,7 @@ void kernel_service_ipc_send( uint64_t pid, uint8_t *data ) {
 		// free entry?
 		if( kernel -> ipc_base_address[ i ].ttl < kernel -> time_rtc ) {
 			// set the message aging time
-			kernel -> ipc_base_address[ i ].ttl = kernel -> time_rtc + KERNEL_IPC_timeout;
+			kernel -> ipc_base_address[ i ].ttl = kernel -> time_rtc + KERNEL_IPC_ttl;
 
 			// set the PID of the process sending the message
 			kernel -> ipc_base_address[ i ].source = kernel_task_pid();
@@ -72,7 +72,7 @@ void kernel_service_ipc_send( uint64_t pid, uint8_t *data ) {
 			kernel -> ipc_base_address[ i ].target = pid;
 
 			// load data into message
-			for( uint8_t d = 0; d < LIB_SYS_IPC_DATA_size_byte; d++ )
+			for( uint8_t d = 0; d < STD_IPC_SIZE_byte; d++ )
 				kernel -> ipc_base_address[ i ].data[ d ] = data[ d ];
 
 			// message sent
@@ -87,7 +87,7 @@ void kernel_service_ipc_send( uint64_t pid, uint8_t *data ) {
 	kernel -> ipc_semaphore = UNLOCK;
 }
 
-uint8_t kernel_service_ipc_receive( struct LIB_SYS_STRUCTURE_IPC *message, uint8_t type ) {
+uint8_t kernel_service_ipc_receive( struct STD_IPC_STRUCTURE *message, uint8_t type ) {
 	// by default no message for us
 	uint8_t flag = FALSE;
 
@@ -102,7 +102,7 @@ uint8_t kernel_service_ipc_receive( struct LIB_SYS_STRUCTURE_IPC *message, uint8
 		// message available?
 		if( kernel -> ipc_base_address[ i ].ttl > kernel -> time_rtc ) {
 			// message properties
-			struct LIB_SYS_STRUCTURE_IPC_DEFAULT *current = (struct LIB_SYS_STRUCTURE_IPC_DEFAULT *) kernel -> ipc_base_address[ i ].data;
+			struct STD_IPC_STRUCTURE_DEFAULT *current = (struct STD_IPC_STRUCTURE_DEFAULT *) kernel -> ipc_base_address[ i ].data;
 
 			// requested message type?
 			if( type && current -> type != type ) continue;	// no
@@ -112,7 +112,7 @@ uint8_t kernel_service_ipc_receive( struct LIB_SYS_STRUCTURE_IPC *message, uint8
 				// move message to process environment
 				uint8_t *from = (uint8_t *) &kernel -> ipc_base_address[ i ];
 				uint8_t *to = (uint8_t *) message;
-				for( uint8_t j = 0; j < sizeof( struct LIB_SYS_STRUCTURE_IPC ); j++ ) to[ j ] = from[ j ];
+				for( uint8_t j = 0; j < sizeof( struct STD_IPC_STRUCTURE ); j++ ) to[ j ] = from[ j ];
 
 				// mark the entry as free
 				kernel -> ipc_base_address[ i ].ttl = EMPTY;
@@ -136,7 +136,7 @@ uint8_t kernel_service_ipc_receive( struct LIB_SYS_STRUCTURE_IPC *message, uint8
 
 uintptr_t kernel_service_memory_alloc( uint64_t bytes ) {
 	// current task properties
-	struct KERNEL_TASK_STRUCTURE *task = (struct KERNEL_TASK_STRUCTURE *) kernel_task_active();
+	struct KERNEL_STRUCTURE_TASK *task = (struct KERNEL_STRUCTURE_TASK *) kernel_task_active();
 
 	// convert the size of the space in bytes into pages
 	uint64_t pages = MACRO_PAGE_ALIGN_UP( bytes ) >> STATIC_PAGE_SIZE_shift;
@@ -165,7 +165,7 @@ uintptr_t kernel_service_memory_alloc( uint64_t bytes ) {
 
 void kernel_service_memory_release( uintptr_t address, uint64_t bytes ) {
 	// current task properties
-	struct KERNEL_TASK_STRUCTURE *task = (struct KERNEL_TASK_STRUCTURE *) kernel_task_active();
+	struct KERNEL_STRUCTURE_TASK *task = (struct KERNEL_STRUCTURE_TASK *) kernel_task_active();
 
 	// convert the size of the space in bytes into pages
 	uint64_t pages = MACRO_PAGE_ALIGN_UP( bytes ) >> STATIC_PAGE_SIZE_shift;
@@ -194,7 +194,7 @@ uintptr_t kernel_service_memory_share( uintptr_t source, uint64_t bytes, uint64_
 	uint64_t pages = MACRO_PAGE_ALIGN_UP( bytes ) >> STATIC_PAGE_SIZE_shift;
 
 	// properties of target task
-	struct KERNEL_TASK_STRUCTURE *target = (struct KERNEL_TASK_STRUCTURE *) kernel_task_by_id( pid );
+	struct KERNEL_STRUCTURE_TASK *target = (struct KERNEL_STRUCTURE_TASK *) kernel_task_by_id( pid );
 
 	// acquire space from target task
 	uint64_t address = kernel_memory_acquire( target -> memory_map, pages ) << STATIC_PAGE_SIZE_shift;
@@ -208,7 +208,7 @@ uintptr_t kernel_service_memory_share( uintptr_t source, uint64_t bytes, uint64_
 
 void kernel_service_sleep( uint64_t ms ) {
 	// task properties
-	struct KERNEL_TASK_STRUCTURE *task = (struct KERNEL_TASK_STRUCTURE *) kernel_task_active();
+	struct KERNEL_STRUCTURE_TASK *task = (struct KERNEL_STRUCTURE_TASK *) kernel_task_active();
 
 	// go to sleep for N ms
 	task -> sleep = kernel -> time_rtc + 1;
@@ -236,7 +236,7 @@ void kernel_service_storage_read( struct LIB_SYS_STRUCTURE_STORAGE *storage ) {
 
 uint16_t kernel_service_task_status( uint64_t pid ) {
 	// retrieve task properties
-	struct KERNEL_TASK_STRUCTURE *task = (struct KERNEL_TASK_STRUCTURE *) kernel_task_by_id( pid );
+	struct KERNEL_STRUCTURE_TASK *task = (struct KERNEL_STRUCTURE_TASK *) kernel_task_by_id( pid );
 
 	// if task doesn't exist
 	if( ! task ) return EMPTY;
@@ -252,7 +252,7 @@ uint64_t kernel_service_uptime() {
 
 uintptr_t kernel_service_task() {
 	// deny access to modification of job queue
-	while( __sync_val_compare_and_swap( &kernel -> task_queue_semaphore, UNLOCK, LOCK ) );
+	while( __sync_val_compare_and_swap( &kernel -> task_semaphore, UNLOCK, LOCK ) );
 
 	// assign place for task descriptor list
 	uintptr_t *address = (uintptr_t *) kernel_service_memory_alloc( (sizeof( struct LIB_SYS_STRUCTURE_TASK ) * kernel -> task_count) + (STATIC_PTR_SIZE_byte << STATIC_MULTIPLE_BY_2_shift) );
@@ -262,23 +262,23 @@ uintptr_t kernel_service_task() {
 
 	// find an free entry
 	struct LIB_SYS_STRUCTURE_TASK *task = (struct LIB_SYS_STRUCTURE_TASK *) &address[ 2 ];
-	for( uint64_t t = 1; t < (KERNEL_TASK_TABLE_LENGTH_page << STATIC_PAGE_SIZE_shift) / sizeof( struct KERNEL_TASK_STRUCTURE ); t++ ) {
+	for( uint64_t t = 1; t < KERNEL_TASK_limit; t++ ) {
 		// entry used?
-		if( ! kernel -> task_queue_address[ t ].flags ) continue;	// no
+		if( ! kernel -> task_base_address[ t ].flags ) continue;	// no
 
 		// do not pass kernel entry
-		if( ! kernel -> task_queue_address[ t ].pid ) continue;
+		if( ! kernel -> task_base_address[ t ].pid ) continue;
 
 		// share default information about task
-		task -> pid = kernel -> task_queue_address[ t ].pid;
-		task -> pid_parent = kernel -> task_queue_address[ t ].pid_parent;
-		task -> sleep = kernel -> task_queue_address[ t ].sleep;
-		task -> page = kernel -> task_queue_address[ t ].page;
-		task -> flags = kernel -> task_queue_address[ t ].flags;
+		task -> pid = kernel -> task_base_address[ t ].pid;
+		task -> pid_parent = kernel -> task_base_address[ t ].pid_parent;
+		task -> sleep = kernel -> task_base_address[ t ].sleep;
+		task -> page = kernel -> task_base_address[ t ].page;
+		task -> flags = kernel -> task_base_address[ t ].flags;
 
 		// task name and length
-		task -> length = kernel -> task_queue_address[ t ].length;
-		for( uint8_t n = 0; n < task -> length; n++ ) task -> name[ n ] = kernel -> task_queue_address[ t ].name[ n ];
+		task -> length = kernel -> task_base_address[ t ].name_length;
+		for( uint8_t n = 0; n < task -> length; n++ ) task -> name[ n ] = kernel -> task_base_address[ t ].name[ n ];
 
 		// descriptor ready, next one
 		task++;
@@ -288,7 +288,7 @@ uintptr_t kernel_service_task() {
 	task -> pid = EMPTY;
 
 	// free access to job queue
-	kernel -> task_queue_semaphore = UNLOCK;
+	kernel -> task_semaphore = UNLOCK;
 
 	// return pointer to task list
 	return (uintptr_t) &address[ 2 ];
@@ -296,7 +296,7 @@ uintptr_t kernel_service_task() {
 
 uint64_t kernel_service_thread( uintptr_t function, uint8_t *string, uint8_t length ) {
 	// create a new thread in queue
-	struct KERNEL_TASK_STRUCTURE *thread;
+	struct KERNEL_STRUCTURE_TASK *thread;
 	if( ! (thread = kernel_task_add( string, length )) ) return EMPTY;	// failed
 
 	// make space for thread paging table
@@ -336,7 +336,7 @@ uint64_t kernel_service_thread( uintptr_t function, uint8_t *string, uint8_t len
 	thread -> stack += KERNEL_EXEC_STACK_SIZE_page;
 
 	// aquire parent task properties
-	struct KERNEL_TASK_STRUCTURE *task = kernel_task_active();
+	struct KERNEL_STRUCTURE_TASK *task = kernel_task_active();
 
 	// threads use same memory map as parent
 	thread -> memory_map = task -> memory_map;

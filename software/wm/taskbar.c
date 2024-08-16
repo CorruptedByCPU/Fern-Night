@@ -172,13 +172,13 @@ void wm_thread_taskbar() {
 	// main loop
 	while( TRUE ) {
 		// prepare temporary message cache
-		struct LIB_SYS_STRUCTURE_IPC ipc;
+		struct STD_IPC_STRUCTURE ipc;
 
 		// message properties
-		struct LIB_SYS_STRUCTURE_IPC_MOUSE *mouse = (struct LIB_SYS_STRUCTURE_IPC_MOUSE *) &ipc.data;
+		struct STD_IPC_STRUCTURE_MOUSE *mouse = (struct STD_IPC_STRUCTURE_MOUSE *) &ipc.data;
 
 		// receive pending messages
-		if( lib_sys_ipc_receive( (struct LIB_SYS_STRUCTURE_IPC *) &ipc, LIB_SYS_IPC_TYPE_MOUSE ) ) {
+		if( lib_sys_ipc_receive( (struct STD_IPC_STRUCTURE *) &ipc, LIB_SYS_IPC_TYPE_MOUSE ) ) {
 			// pressed left mouse button?
 			if( mouse -> status & LIB_SYS_device_mouse_status_left_mouse_button ) {
 				// cursor over taskbar menu button?

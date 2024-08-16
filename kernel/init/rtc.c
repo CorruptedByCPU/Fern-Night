@@ -2,7 +2,7 @@
  Copyright (C) Andrzej Adamczyk (at https://blackdev.org/). All rights reserved.
 ===============================================================================*/
 
-void kernel_init_rtc( void ) {
+void driver_rtc_init( void ) {
 	// connect real-time controller interrupt handler
 	kernel_idt_mount( KERNEL_IDT_IRQ_offset + DRIVER_RTC_IRQ_number, KERNEL_IDT_TYPE_irq, (uintptr_t) driver_rtc_entry );
 

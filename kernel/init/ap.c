@@ -59,7 +59,7 @@ void kernel_init_ap() {
 	//--------------------------------------------------------------------------
 
 	// add the currently processed process to the processor task list
-	kernel -> task_ap_address[ kernel_lapic_id() ] = (uintptr_t) kernel -> task_queue_address;
+	kernel -> task_cpu_address[ kernel_lapic_id() ] = (uintptr_t) kernel -> task_base_address;
 
 	// initialize the LAPIC of the logical processor
 	kernel_lapic_init();

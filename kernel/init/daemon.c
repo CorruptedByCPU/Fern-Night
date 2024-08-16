@@ -30,7 +30,7 @@ void kernel_init_daemon() {
 	struct LIB_ELF_STRUCTURE_HEADER *elf_header = (struct LIB_ELF_STRUCTURE_HEADER *) ((uint64_t) elf + elf -> header_table_position);
 
 	// create a new job in the queue
-	struct KERNEL_TASK_STRUCTURE *child;
+	struct KERNEL_STRUCTURE_TASK *child;
 	if( ! (child = kernel_task_add( kernel_init_daemon_file, sizeof( kernel_init_daemon_file ) - 1 )) ) return;	// failed
 
 	// make space for the process paging table
@@ -101,7 +101,7 @@ void kernel_init_daemon() {
 	child -> page++;
 
 	// set default output stream
-	struct KERNEL_TASK_STRUCTURE *parent = (struct KERNEL_TASK_STRUCTURE *) kernel_task_active();
+	struct KERNEL_STRUCTURE_TASK *parent = (struct KERNEL_STRUCTURE_TASK *) kernel_task_active();
 	child -> stream_out = parent -> stream_out;
 	child -> stream_out -> count++;
 
@@ -109,5 +109,5 @@ void kernel_init_daemon() {
 	kernel_page_merge( (uint64_t *) kernel -> page_base_address, (uint64_t *) child -> cr3 );
 
 	// process ready to run
-	child -> flags |= KERNEL_TASK_FLAG_active | KERNEL_TASK_FLAG_daemon | KERNEL_TASK_FLAG_init;
+	child -> flags |= KERNEL_TASK_FLAG_active | KERNEL_TASK_FLAG_module | KERNEL_TASK_FLAG_init;
 }

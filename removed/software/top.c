@@ -36,7 +36,7 @@ uint8_t size_tib[] = "TiB";
 
 const char *sizes[] = { (const char *) &size_byte, (const char *) &size_kib, (const char *) &size_mib, (const char *) &size_gib, (const char *) &size_tib };
 
-struct LIB_SYS_STRUCTURE_IPC top_message = { EMPTY };
+struct STD_IPC_STRUCTURE top_message = { EMPTY };
 
 int64_t _main( uint64_t argc, uint8_t *argv[] ) {
 	// set window name and clear screen (color default)

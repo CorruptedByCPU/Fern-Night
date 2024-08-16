@@ -63,7 +63,7 @@ int64_t _main( uint64_t argc, uint8_t *argv[] ) {
 			uint16_t key = lib_sys_keyboard();
 
 			// prepare the message
-			struct LIB_SYS_STRUCTURE_IPC_KEYBOARD message;
+			struct STD_IPC_STRUCTURE_KEYBOARD message;
 			message.type = LIB_SYS_IPC_TYPE_KEYBOARD;
 
 			// and the key itself
@@ -74,7 +74,7 @@ int64_t _main( uint64_t argc, uint8_t *argv[] ) {
 		}
 
 		// receive pending messages
-		if( lib_sys_ipc_receive( (struct LIB_SYS_STRUCTURE_IPC *) &console_message, LIB_SYS_IPC_TYPE_KEYBOARD ) )
+		if( lib_sys_ipc_receive( (struct STD_IPC_STRUCTURE *) &console_message, LIB_SYS_IPC_TYPE_KEYBOARD ) )
 			// send to process
 			lib_sys_ipc_send( console_pid_child, (uint8_t *) &console_message.data );
 

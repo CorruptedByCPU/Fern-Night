@@ -327,7 +327,7 @@ void driver_ps2_mouse( void ) {
 
 uint16_t driver_ps2_keyboard_key_read() {
 	// Am I framebuffer manager?
-	struct KERNEL_TASK_STRUCTURE *task = kernel_task_active();
+	struct KERNEL_STRUCTURE_TASK *task = kernel_task_active();
 	if( task -> pid != kernel -> framebuffer_pid ) return EMPTY;	// no
 
 	// get first key code in buffer

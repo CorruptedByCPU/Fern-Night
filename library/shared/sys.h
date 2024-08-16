@@ -90,9 +90,10 @@
 
 	#define LIB_SYS_STREAM_META_LENGTH_byte			0x08
 
-	#define	LIB_SYS_STREAM_FLAG_closed			0b00000001
+	#define	LIB_SYS_STREAM_FLAG_data			0b00000001
 	#define	LIB_SYS_STREAM_FLAG_undefinied			0b00000010
-	#define	LIB_SYS_STREAM_FLAG_null			0b10000000
+	#define	LIB_SYS_STREAM_FLAG_null			0b01000000
+	#define	LIB_SYS_STREAM_FLAG_closed			0b10000000
 
 	#define	LIB_SYS_STREAM_out				0b00000001
 	#define	LIB_SYS_STREAM_in				0b00000010
@@ -116,7 +117,7 @@
 
 	//-----------------------------------------------------------------------------
 
-	#define	LIB_SYS_IPC_DATA_size_byte			40
+	#define	STD_IPC_SIZE_byte			40
 
 	#define	LIB_SYS_IPC_TYPE_ANY				0x00
 	#define	LIB_SYS_IPC_TYPE_KEYBOARD			0x01
@@ -131,26 +132,26 @@
 		uint64_t	pid;
 	} __attribute__( (packed) );
 
-	struct	LIB_SYS_STRUCTURE_IPC {
+	struct	STD_IPC_STRUCTURE {
 		uint64_t	ttl;
 		uint64_t	source;
 		uint64_t	target;
-		uint8_t		data[ LIB_SYS_IPC_DATA_size_byte ];
+		uint8_t		data[ STD_IPC_SIZE_byte ];
 	} __attribute__( (packed) );
 
 	#define	LIB_SYS_device_mouse_status_left_mouse_button	0b00000001
 	#define	LIB_SYS_device_mouse_status_right_mouse_button	0b00000010
 
-	struct	LIB_SYS_STRUCTURE_IPC_DEFAULT {
+	struct	STD_IPC_STRUCTURE_DEFAULT {
 		uint8_t		type;
 	} __attribute__( (packed) );
 
-	struct	LIB_SYS_STRUCTURE_IPC_KEYBOARD {
+	struct	STD_IPC_STRUCTURE_KEYBOARD {
 		uint8_t		type;
 		uint16_t	key;
 	} __attribute__( (packed) );
 
-	struct	LIB_SYS_STRUCTURE_IPC_MOUSE {
+	struct	STD_IPC_STRUCTURE_MOUSE {
 		uint8_t		type;
 		uint8_t		status;
 	} __attribute__( (packed) );
@@ -172,9 +173,9 @@
 	inline uint64_t lib_sys_int_return_value_unsigned();
 	inline uintptr_t lib_sys_int_return_pointer();
 	void lib_sys_ipc_send( uint64_t pid, uint8_t *message );
-	uint8_t lib_sys_ipc_receive( struct LIB_SYS_STRUCTURE_IPC *message, uint8_t type );
+	uint8_t lib_sys_ipc_receive( struct STD_IPC_STRUCTURE *message, uint8_t type );
 	void lib_sys_int_ipc_send( uint64_t pid, uint8_t *message );
-	uint8_t lib_sys_int_ipc_receive( struct LIB_SYS_STRUCTURE_IPC *message, uint8_t type );
+	uint8_t lib_sys_int_ipc_receive( struct STD_IPC_STRUCTURE *message, uint8_t type );
 	void lib_sys_framebuffer( struct LIB_SYS_STRUCTURE_FRAMEBUFFER *framebuffer );
 	void lib_sys_int_framebuffer( struct LIB_SYS_STRUCTURE_FRAMEBUFFER *framebuffer );
 	uint64_t lib_sys_task_pid();

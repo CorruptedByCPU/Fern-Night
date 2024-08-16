@@ -3,7 +3,7 @@
 ;=================================================================================
 
 ; get pointer from driver handling function
-extern	kernel_rtc
+extern	driver_rtc
 
 ; 64 bit procedure code
 [BITS 64]
@@ -42,7 +42,7 @@ driver_rtc_entry:
 	; FXSAVE64	[rax]
 
 	; execute driver handler
-	call	kernel_rtc
+	call	driver_rtc
 
 	; ; restore "floating point" registers
 	; mov	rax,	-0x1000

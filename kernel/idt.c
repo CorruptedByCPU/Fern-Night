@@ -20,7 +20,7 @@ void kernel_idt_exception( struct KERNEL_IDT_STRUCTURE_EXCEPTION *exception ) {
 	uint8_t approved = FALSE;	// by default no
 
 	// properties of current task
-	struct KERNEL_TASK_STRUCTURE *task = kernel_task_active();
+	struct KERNEL_STRUCTURE_TASK *task = kernel_task_active();
 
 	// show type of exception
 	kernel_log( "Exception: " );

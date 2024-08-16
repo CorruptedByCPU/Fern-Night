@@ -101,7 +101,7 @@ struct KERNEL {
 	uint8_t							io_apic_semaphore;
 
 // variables of IPC management functions
-struct LIB_SYS_STRUCTURE_IPC	*ipc_base_address;
+struct STD_IPC_STRUCTURE	*ipc_base_address;
 uint8_t		ipc_semaphore;
 
 	// variables of APIC management functions
@@ -136,18 +136,19 @@ uint8_t		storage_root_id;
 uint8_t		storage_semaphore;
 
 // variable of Stream management functions
-struct KERNEL_STREAM_STRUCTURE	*stream_base_address;
+struct KERNEL_STRUCTURE_STREAM	*stream_base_address;
 uint8_t		stream_semaphore;
 // pointers of Stream management functions
-void		(*stream_release)( struct KERNEL_STREAM_STRUCTURE *stream );
+void		(*stream_release)( struct KERNEL_STRUCTURE_STREAM *stream );
 
-// variables of Task management functions
-struct KERNEL_TASK_STRUCTURE	*task_queue_address;
-uintptr_t	*task_ap_address;
-uint8_t		task_queue_semaphore;
-uint64_t	task_id;
-uint64_t	task_count;
-uint8_t		task_cpu_semaphore;
+	// variables of Task management functions
+	struct KERNEL_STRUCTURE_TASK			*task_base_address;
+	uintptr_t					*task_cpu_address;
+	uint8_t						task_cpu_semaphore;
+	uint8_t						task_semaphore;
+	uint64_t					task_limit;
+	uint64_t					task_count;
+	int64_t						task_id;
 
 // variables of Time management functions
 volatile uint64_t					time_rdtsc;

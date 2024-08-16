@@ -7,7 +7,7 @@ Copyright (C) Andrzej Adamczyk (at https://blackdev.org/). All rights reserved.
 
 	#define	KERNEL_STREAM_limit		(KERNEL_TASK_limit << STATIC_MULTIPLE_BY_2_shift)
 
-	struct	KERNEL_STREAM_STRUCTURE {
+	struct	KERNEL_STRUCTURE_STREAM {
 		uint8_t		*base_address;
 		uint16_t	start;
 		uint16_t	end;
@@ -18,11 +18,11 @@ Copyright (C) Andrzej Adamczyk (at https://blackdev.org/). All rights reserved.
 		uint8_t		meta[ LIB_SYS_STREAM_META_LENGTH_byte ];
 	};
 
-	struct KERNEL_STREAM_STRUCTURE *kernel_stream();
+	struct KERNEL_STRUCTURE_STREAM *kernel_stream();
 	uint8_t kernel_stream_get( uint8_t *meta, uint8_t direction );
 	uint64_t kernel_stream_in( uint8_t *data );
 	void kernel_stream_out( uint8_t *string, uint64_t length );
 	void kernel_stream_out_value( uint64_t value, uint8_t base, uint8_t prefix, uint8_t character );
-	void kernel_stream_release( struct KERNEL_STREAM_STRUCTURE *stream );
+	void kernel_stream_release( struct KERNEL_STRUCTURE_STREAM *stream );
 	void kernel_stream_set( uint8_t direction, uint8_t *meta );
 #endif

@@ -2,7 +2,7 @@
 Copyright (C) Andrzej Adamczyk (at https://blackdev.org/). All rights reserved.
 =============================================================================*/
 
-struct KERNEL_STREAM_STRUCTURE *kernel_stream() {
+struct KERNEL_STRUCTURE_STREAM *kernel_stream() {
 	// deny access, only one logical processor at a time
 	while( __sync_val_compare_and_swap( &kernel -> stream_semaphore, UNLOCK, LOCK ) );
 
@@ -25,7 +25,7 @@ struct KERNEL_STREAM_STRUCTURE *kernel_stream() {
 			kernel -> stream_semaphore = UNLOCK;
 
 			// return stream id
-			return (struct KERNEL_STREAM_STRUCTURE *) &kernel -> stream_base_address[ i ];
+			return (struct KERNEL_STRUCTURE_STREAM *) &kernel -> stream_base_address[ i ];
 		}
 	}
 
@@ -36,7 +36,7 @@ struct KERNEL_STREAM_STRUCTURE *kernel_stream() {
 	return	EMPTY;
 }
 
-void kernel_stream_release( struct KERNEL_STREAM_STRUCTURE *stream ) {
+void kernel_stream_release( struct KERNEL_STRUCTURE_STREAM *stream ) {
 	// only one process used the stream?
 	if( ! --stream -> count ) {
 		// free up stream space
@@ -49,7 +49,7 @@ void kernel_stream_release( struct KERNEL_STREAM_STRUCTURE *stream ) {
 
 void kernel_stream_out( uint8_t *string, uint64_t length ) {
 	// get the process output stream id
-	struct KERNEL_TASK_STRUCTURE *task = (struct KERNEL_TASK_STRUCTURE *) kernel_task_active();
+	struct KERNEL_STRUCTURE_TASK *task = (struct KERNEL_STRUCTURE_TASK *) kernel_task_active();
 
 	// data volume supported?
 	if( length > LIB_SYS_STREAM_SIZE_byte ) return;	// no
@@ -132,7 +132,7 @@ void kernel_stream_out_value( uint64_t value, uint8_t base, uint8_t prefix, uint
 
 uint64_t kernel_stream_in( uint8_t *cache ) {
 	// get the process output stream id
-	struct KERNEL_TASK_STRUCTURE *task = (struct KERNEL_TASK_STRUCTURE *) kernel_task_active();
+	struct KERNEL_STRUCTURE_TASK *task = (struct KERNEL_STRUCTURE_TASK *) kernel_task_active();
 
 	// stream closed or empty?
 	if( task -> stream_in -> flags & LIB_SYS_STREAM_FLAG_closed || task -> stream_in -> free == LIB_SYS_STREAM_SIZE_byte ) return EMPTY;	// tak
@@ -168,14 +168,14 @@ uint64_t kernel_stream_in( uint8_t *cache ) {
 
 uint8_t kernel_stream_get( uint8_t *meta, uint8_t direction ) {
 	// task properties
-	struct KERNEL_TASK_STRUCTURE *task = (struct KERNEL_TASK_STRUCTURE *) kernel_task_active();
+	struct KERNEL_STRUCTURE_TASK *task = (struct KERNEL_STRUCTURE_TASK *) kernel_task_active();
 
 	// stream properties
-	struct KERNEL_STREAM_STRUCTURE *stream;
+	struct KERNEL_STRUCTURE_STREAM *stream;
 
 	// which stream?
-	if( direction & LIB_SYS_STREAM_in ) stream = (struct KERNEL_STREAM_STRUCTURE *) task -> stream_in;
-	else stream = (struct KERNEL_STREAM_STRUCTURE *) task -> stream_out;
+	if( direction & LIB_SYS_STREAM_in ) stream = (struct KERNEL_STRUCTURE_STREAM *) task -> stream_in;
+	else stream = (struct KERNEL_STRUCTURE_STREAM *) task -> stream_out;
 
 	// lock access to the stream
 	while( __sync_val_compare_and_swap( &stream -> lock, UNLOCK, LOCK ) );
@@ -193,14 +193,14 @@ uint8_t kernel_stream_get( uint8_t *meta, uint8_t direction ) {
 
 void kernel_stream_set( uint8_t direction, uint8_t *meta ) {
 	// task properties
-	struct KERNEL_TASK_STRUCTURE *task = (struct KERNEL_TASK_STRUCTURE *) kernel_task_active();
+	struct KERNEL_STRUCTURE_TASK *task = (struct KERNEL_STRUCTURE_TASK *) kernel_task_active();
 
 	// stream properties
-	struct KERNEL_STREAM_STRUCTURE *stream;
+	struct KERNEL_STRUCTURE_STREAM *stream;
 
 	// which stream?
-	if( direction & LIB_SYS_STREAM_in ) stream = (struct KERNEL_STREAM_STRUCTURE *) task -> stream_in;
-	else stream = (struct KERNEL_STREAM_STRUCTURE *) task -> stream_out;
+	if( direction & LIB_SYS_STREAM_in ) stream = (struct KERNEL_STRUCTURE_STREAM *) task -> stream_in;
+	else stream = (struct KERNEL_STRUCTURE_STREAM *) task -> stream_out;
 
 	// lock access to the stream
 	while( __sync_val_compare_and_swap( &stream -> lock, UNLOCK, LOCK ) );

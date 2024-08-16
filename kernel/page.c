@@ -115,7 +115,7 @@ uint8_t kernel_page_alloc( uint64_t *pml4, uint64_t address, uint64_t pages, uin
 
 uint8_t kernel_page_clang( uintptr_t *pml4, uintptr_t source_address, uintptr_t target_address, uint64_t pages, uint16_t flags ) {
 	// properties of target task
-	struct KERNEL_TASK_STRUCTURE *task = kernel_task_active();
+	struct KERNEL_STRUCTURE_TASK *task = kernel_task_active();
 
 	// start with following array[ entries ]
 	uint16_t p4 = (target_address & ~KERNEL_PAGE_PML5_mask) / (KERNEL_PAGE_PML3_SIZE_byte);

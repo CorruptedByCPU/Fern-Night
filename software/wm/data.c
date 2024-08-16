@@ -49,7 +49,7 @@ struct WM_STRUCTURE_OBJECT *wm_object_selected = EMPTY;
 struct WM_STRUCTURE_ZONE *wm_zone_base_address = EMPTY;
 uint64_t wm_zone_count = EMPTY;
 
-struct LIB_SYS_STRUCTURE_IPC wm_message = { EMPTY };
+struct STD_IPC_STRUCTURE wm_message = { EMPTY };
 
 uint16_t wm_keyboard_status_alt_left = EMPTY;
 
