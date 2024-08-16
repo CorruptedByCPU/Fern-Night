@@ -1,5 +1,5 @@
 # Info
 
-Fern-Night is a substitute between Cyjon <> Foton.
+As a workbench and minefield of Foton, modification of this repository will be suspended from today.
 
-For now (13.08.2024) as a base of software for Cyjon, but in near future - will be almost the same as Foton except of structures optimization.
+Cyjon is currently being refactored to be compatible with Foton.
