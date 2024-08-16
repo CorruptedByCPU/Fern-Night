@@ -154,7 +154,7 @@ void kernel_init( void ) {
 	kernel_init_env();
 
 	// configure RTC
-	kernel_init_rtc();
+	driver_rtc_init();
 
 	// configure HPET
 	// kernel_init_hpet();

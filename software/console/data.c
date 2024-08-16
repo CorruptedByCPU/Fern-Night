@@ -8,9 +8,9 @@ uint64_t console_pid_child = -1;
 struct LIB_SYS_STRUCTURE_FRAMEBUFFER console_framebuffer = { EMPTY };
 uint32_t *console_cache;
 
-struct LIB_SYS_STRUCTURE_IPC console_ipc = { EMPTY };
+struct STD_IPC_STRUCTURE console_ipc = { EMPTY };
 
-struct LIB_SYS_STRUCTURE_IPC console_message = { EMPTY };
+struct STD_IPC_STRUCTURE console_message = { EMPTY };
 
 struct	LIB_TERMINAL_STRUCTURE console_terminal = { CONSOLE_WINDOW_width_pixel - 2, (CONSOLE_WINDOW_height_pixel - LIB_INTERFACE_HEADER_HEIGHT_pixel) - 1, EMPTY, CONSOLE_WINDOW_width_pixel, EMPTY, EMPTY, STATIC_COLOR_gray_light, STATIC_COLOR_black, 0x10, LIBRARY_TERMINAL_FLAG_clean, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY };
 

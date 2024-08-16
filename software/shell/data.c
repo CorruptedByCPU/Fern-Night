@@ -2,7 +2,7 @@
  Copyright (C) Andrzej Adamczyk (at https://blackdev.org/). All rights reserved.
 ===============================================================================*/
 
-struct LIB_SYS_STRUCTURE_IPC shell_message	= { EMPTY };
+struct STD_IPC_STRUCTURE shell_message	= { EMPTY };
 
 uint8_t shell_command[ SHELL_COMMAND_limit ]	= { EMPTY };
 

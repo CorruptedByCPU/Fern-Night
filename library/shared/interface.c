@@ -46,12 +46,12 @@ void lib_interface_default_close( void ) {
 
 void lib_interface_event( struct LIB_INTERFACE_STRUCTURE *interface ) {
 	// prepare temporary message cache
-	struct LIB_SYS_STRUCTURE_IPC ipc;
+	struct STD_IPC_STRUCTURE ipc;
 
 	// receive pending messages
-	if( lib_sys_ipc_receive( (struct LIB_SYS_STRUCTURE_IPC *) &ipc, LIB_SYS_IPC_TYPE_MOUSE ) ) {
+	if( lib_sys_ipc_receive( (struct STD_IPC_STRUCTURE *) &ipc, LIB_SYS_IPC_TYPE_MOUSE ) ) {
 		// message properties
-		struct LIB_SYS_STRUCTURE_IPC_MOUSE *mouse = (struct LIB_SYS_STRUCTURE_IPC_MOUSE *) &ipc.data;
+		struct STD_IPC_STRUCTURE_MOUSE *mouse = (struct STD_IPC_STRUCTURE_MOUSE *) &ipc.data;
 
 		// pressed left mouse button?
 		if( mouse -> status & LIB_SYS_device_mouse_status_left_mouse_button ) {
@@ -183,7 +183,7 @@ void lib_interface_window( struct LIB_INTERFACE_STRUCTURE *interface ) {
 	lib_sys_framebuffer( (struct LIB_SYS_STRUCTURE_FRAMEBUFFER *) &local_framebuffer );
 
 	// define properties of requesting window
-	struct LIB_SYS_STRUCTURE_IPC local_message = { EMPTY };
+	struct STD_IPC_STRUCTURE local_message = { EMPTY };
 	struct WM_STRUCTURE_IPC_WINDOW_create *data = (struct WM_STRUCTURE_IPC_WINDOW_create *) local_message.data;
 	data -> ipc.type = LIB_SYS_IPC_TYPE_WINDOW_MANAGER;
 	data -> ipc.function = WM_IPC_FUNCTION_create;
@@ -196,7 +196,7 @@ void lib_interface_window( struct LIB_INTERFACE_STRUCTURE *interface ) {
 	// wait for answer from framebuffer manager
 	while( TRUE ) {
 		// retrieve messae from Window Manager
-		if( lib_sys_ipc_receive( (struct LIB_SYS_STRUCTURE_IPC *) &local_message, LIB_SYS_IPC_TYPE_WINDOW_MANAGER ) ) {
+		if( lib_sys_ipc_receive( (struct STD_IPC_STRUCTURE *) &local_message, LIB_SYS_IPC_TYPE_WINDOW_MANAGER ) ) {
 			// properties of message
 			struct WM_STRUCTURE_IPC *answer = (struct WM_STRUCTURE_IPC *) &local_message.data;
 
@@ -246,7 +246,7 @@ void lib_interface_close( struct LIB_INTERFACE_STRUCTURE *interface ) {
 	lib_sys_framebuffer( (struct LIB_SYS_STRUCTURE_FRAMEBUFFER *) &local_framebuffer );
 
 	// select window to close
-	struct LIB_SYS_STRUCTURE_IPC local_message = { EMPTY };
+	struct STD_IPC_STRUCTURE local_message = { EMPTY };
 	struct WM_STRUCTURE_IPC_WINDOW_close *data = (struct WM_STRUCTURE_IPC_WINDOW_close *) local_message.data;
 	data -> ipc.type = LIB_SYS_IPC_TYPE_WINDOW_MANAGER;
 	data -> ipc.function = WM_IPC_FUNCTION_close;

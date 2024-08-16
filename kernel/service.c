@@ -63,7 +63,7 @@ void kernel_service_ipc_send( uint64_t pid, uint8_t *data ) {
 		// free entry?
 		if( kernel -> ipc_base_address[ i ].ttl < kernel -> time_rtc ) {
 			// set the message aging time
-			kernel -> ipc_base_address[ i ].ttl = kernel -> time_rtc + KERNEL_IPC_timeout;
+			kernel -> ipc_base_address[ i ].ttl = kernel -> time_rtc + KERNEL_IPC_ttl;
 
 			// set the PID of the process sending the message
 			kernel -> ipc_base_address[ i ].source = kernel_task_pid();
@@ -72,7 +72,7 @@ void kernel_service_ipc_send( uint64_t pid, uint8_t *data ) {
 			kernel -> ipc_base_address[ i ].target = pid;
 
 			// load data into message
-			for( uint8_t d = 0; d < LIB_SYS_IPC_DATA_size_byte; d++ )
+			for( uint8_t d = 0; d < STD_IPC_SIZE_byte; d++ )
 				kernel -> ipc_base_address[ i ].data[ d ] = data[ d ];
 
 			// message sent
@@ -87,7 +87,7 @@ void kernel_service_ipc_send( uint64_t pid, uint8_t *data ) {
 	kernel -> ipc_semaphore = UNLOCK;
 }
 
-uint8_t kernel_service_ipc_receive( struct LIB_SYS_STRUCTURE_IPC *message, uint8_t type ) {
+uint8_t kernel_service_ipc_receive( struct STD_IPC_STRUCTURE *message, uint8_t type ) {
 	// by default no message for us
 	uint8_t flag = FALSE;
 
@@ -102,7 +102,7 @@ uint8_t kernel_service_ipc_receive( struct LIB_SYS_STRUCTURE_IPC *message, uint8
 		// message available?
 		if( kernel -> ipc_base_address[ i ].ttl > kernel -> time_rtc ) {
 			// message properties
-			struct LIB_SYS_STRUCTURE_IPC_DEFAULT *current = (struct LIB_SYS_STRUCTURE_IPC_DEFAULT *) kernel -> ipc_base_address[ i ].data;
+			struct STD_IPC_STRUCTURE_DEFAULT *current = (struct STD_IPC_STRUCTURE_DEFAULT *) kernel -> ipc_base_address[ i ].data;
 
 			// requested message type?
 			if( type && current -> type != type ) continue;	// no
@@ -112,7 +112,7 @@ uint8_t kernel_service_ipc_receive( struct LIB_SYS_STRUCTURE_IPC *message, uint8
 				// move message to process environment
 				uint8_t *from = (uint8_t *) &kernel -> ipc_base_address[ i ];
 				uint8_t *to = (uint8_t *) message;
-				for( uint8_t j = 0; j < sizeof( struct LIB_SYS_STRUCTURE_IPC ); j++ ) to[ j ] = from[ j ];
+				for( uint8_t j = 0; j < sizeof( struct STD_IPC_STRUCTURE ); j++ ) to[ j ] = from[ j ];
 
 				// mark the entry as free
 				kernel -> ipc_base_address[ i ].ttl = EMPTY;

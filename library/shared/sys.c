@@ -144,13 +144,13 @@ void print( const char *string ) {
 
 uint16_t getkey() {
 	// prepare temporary message cache
-	struct LIB_SYS_STRUCTURE_IPC ipc;
+	struct STD_IPC_STRUCTURE ipc;
 
 	// receive pending messages
-	if( ! lib_sys_ipc_receive( (struct LIB_SYS_STRUCTURE_IPC *) &ipc, LIB_SYS_IPC_TYPE_KEYBOARD ) ) return EMPTY;
+	if( ! lib_sys_ipc_receive( (struct STD_IPC_STRUCTURE *) &ipc, LIB_SYS_IPC_TYPE_KEYBOARD ) ) return EMPTY;
 
 	// message properties
-	struct LIB_SYS_STRUCTURE_IPC_KEYBOARD *keyboard = (struct LIB_SYS_STRUCTURE_IPC_KEYBOARD *) &ipc.data;
+	struct STD_IPC_STRUCTURE_KEYBOARD *keyboard = (struct STD_IPC_STRUCTURE_KEYBOARD *) &ipc.data;
 
 	// return key
 	return keyboard -> key;

@@ -4,7 +4,7 @@
 
 void wm_event() {
 	// there are messages for us?
-	if( (lib_sys_ipc_receive( (struct LIB_SYS_STRUCTURE_IPC *) &wm_message, LIB_SYS_IPC_TYPE_WINDOW_MANAGER )) ) {
+	if( (lib_sys_ipc_receive( (struct STD_IPC_STRUCTURE *) &wm_message, LIB_SYS_IPC_TYPE_WINDOW_MANAGER )) ) {
 		// check message type
 		struct WM_STRUCTURE_IPC *ipc = (struct WM_STRUCTURE_IPC *) &wm_message.data;
 

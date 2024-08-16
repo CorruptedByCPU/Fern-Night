@@ -3,7 +3,7 @@
 ===============================================================================*/
 
 __attribute__(( preserve_most ))
-void kernel_rtc( void ) {
+void driver_rtc( void ) {
 	// receive pending interrupt of the real-time controller
 	while( TRUE ) {
 		driver_port_out_byte( DRIVER_RTC_PORT_command, DRIVER_RTC_STATUS_REGISTER_C );

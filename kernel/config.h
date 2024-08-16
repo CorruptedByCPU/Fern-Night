@@ -101,7 +101,7 @@ struct KERNEL {
 	uint8_t							io_apic_semaphore;
 
 // variables of IPC management functions
-struct LIB_SYS_STRUCTURE_IPC	*ipc_base_address;
+struct STD_IPC_STRUCTURE	*ipc_base_address;
 uint8_t		ipc_semaphore;
 
 	// variables of APIC management functions

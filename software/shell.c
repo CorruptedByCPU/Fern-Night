@@ -114,7 +114,7 @@ int64_t _main( uint64_t argc, uint8_t *argv[] ) {
 					// program finished working?
 					while( lib_sys_task_status( shell_exec_pid ) ) {	// no
 						// every incoming message
-						if( lib_sys_ipc_receive( (struct LIB_SYS_STRUCTURE_IPC *) &shell_message, LIB_SYS_IPC_TYPE_ANY ) )
+						if( lib_sys_ipc_receive( (struct STD_IPC_STRUCTURE *) &shell_message, LIB_SYS_IPC_TYPE_ANY ) )
 							// forward to process
 							lib_sys_ipc_send( shell_exec_pid, (uint8_t *) &shell_message.data );
 					}

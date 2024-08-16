@@ -7,7 +7,7 @@ void wm_ipc_keyboard( uint16_t key ) {
 	if( ! wm_object_active ) return;
 
 	// prepare the message
-	struct LIB_SYS_STRUCTURE_IPC_KEYBOARD message;
+	struct STD_IPC_STRUCTURE_KEYBOARD message;
 	message.type = LIB_SYS_IPC_TYPE_KEYBOARD;
 
 	// and the key itself
@@ -22,7 +22,7 @@ void wm_ipc_mouse( uint8_t status ) {
 	if( ! wm_object_selected ) return;
 
 	// prepare the message
-	struct LIB_SYS_STRUCTURE_IPC_MOUSE message;
+	struct STD_IPC_STRUCTURE_MOUSE message;
 	message.type = LIB_SYS_IPC_TYPE_MOUSE;
 
 	// and mouse status itself
